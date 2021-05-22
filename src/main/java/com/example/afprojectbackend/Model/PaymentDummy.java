@@ -3,7 +3,7 @@ package com.example.afprojectbackend.Model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document
+@Document("PaymentDummy")
 public class PaymentDummy {
 
     @Id
