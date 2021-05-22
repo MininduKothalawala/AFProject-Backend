@@ -3,11 +3,11 @@ package com.example.afprojectbackend.Model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document
+@Document("Researcher")
 public class Researcher {
 
     @Id
-    private String R_userId;
+    private String R_id;
     private String R_name;
     private String R_email;
     private String R_mobileNo;
@@ -15,19 +15,19 @@ public class Researcher {
     public Researcher() {
     }
 
-    public Researcher(String r_userId, String r_name, String r_email, String r_mobileNo) {
-        R_userId = r_userId;
+    public Researcher(String r_id, String r_name, String r_email, String r_mobileNo) {
+        R_id = r_id;
         R_name = r_name;
         R_email = r_email;
         R_mobileNo = r_mobileNo;
     }
 
-    public String getR_userId() {
-        return R_userId;
+    public String getR_id() {
+        return R_id;
     }
 
-    public void setR_userId(String r_userId) {
-        R_userId = r_userId;
+    public void setR_id(String r_id) {
+        R_id = r_id;
     }
 
     public String getR_name() {
