@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/conference")
 public class ConferenceController {
 
@@ -19,19 +19,16 @@ public class ConferenceController {
     @Autowired
     private ConferenceRepository conferenceRepository;
 
-
     public ConferenceController(ConferenceService conferenceService) {
         this.conferenceService = conferenceService;
 
     }
 
+    @PostMapping
+    public ResponseEntity addConference(@RequestBody Conference conference) {
 
-        @PostMapping
-        public ResponseEntity addConference(@RequestBody Conference conference){
-
-            conferenceService.addConference(conference);
-            return ResponseEntity.status(HttpStatus.CREATED).build();
-
+        conferenceService.addConference(conference);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping
