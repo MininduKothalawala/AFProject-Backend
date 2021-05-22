@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/adminuser")
 public class AdminUserController {
 
@@ -30,7 +30,7 @@ public class AdminUserController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @GetMapping
+    @GetMapping("/alladmin")
     public ResponseEntity<List<AdminUser>> getAllAdminUsers(){
         return ResponseEntity.ok(adminUserService.getAllAdminUsers());
     }
@@ -43,6 +43,8 @@ public class AdminUserController {
 
     @GetMapping("/getadminuser/{username}")
     public Object getAdminUser(@PathVariable String username){
+        System.out.println("admin name :"+username);
         return ResponseEntity.ok(adminUserService.getAdminByUsername(username));
+
     }
 }
