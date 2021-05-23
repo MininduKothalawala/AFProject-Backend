@@ -10,7 +10,7 @@ import java.util.Date;
 @Document("conference")
 public class Conference {
 
-    @Id
+    @Field (name = "id")
     private String id;
     @Field(name = "name")
     private String conferenceName;
