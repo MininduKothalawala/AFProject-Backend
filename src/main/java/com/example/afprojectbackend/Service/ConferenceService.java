@@ -42,5 +42,8 @@ public class ConferenceService {
         return conferenceRepository.findAll();
     }
 
-
+    public List<Conference> getConferenceByStatus(String status){
+        //return conferenceRepository.findByStatus("Pending");
+        return conferenceRepository.findByStatus(status);
+    }
 }
