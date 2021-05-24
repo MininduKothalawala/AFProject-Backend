@@ -28,7 +28,7 @@ public class AttendeeService {
         attendeeRepository.deleteById(id);
     }
 
-    public Optional<Attendee> getAttendeeById(String id){
+    public Object getAttendeeById(String id){
         return attendeeRepository.findById(id);
     }
 }
