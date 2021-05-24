@@ -39,4 +39,9 @@ public class ConductorController {
     public void deleteConductor(@PathVariable String id){
         conductorService.deleteConductor(id);
     }
+
+    @GetMapping("/getconductor/{id}")
+    public Object getConductorById(@PathVariable String id){
+        return conductorService.getConductorById(id);
+    }
 }

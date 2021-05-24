@@ -39,4 +39,9 @@ public class ResearcherController {
     public void deleteResearcher(@PathVariable String id){
         researcherService.deleteResearcher(id);
     }
+
+    @GetMapping("/getresearcher/{id}")
+    public Object getResearcherById(@PathVariable String id){
+        return researcherService.getResearcherById(id);
+    }
 }
