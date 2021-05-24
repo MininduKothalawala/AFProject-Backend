@@ -10,19 +10,13 @@ import java.util.Date;
 @Document("conference")
 public class Conference {
 
-    @Field (name = "id")
+    @Id
     private String id;
-    @Field(name = "name")
     private String conferenceName;
-    @Field(name = "date")
     private String date;
-    @Field(name = "sTime")
     private String startingTime;
-    @Field(name = "eTime")
     private String endingTime;
-    @Field(name = "venue")
     private String venue;
-    @Field(name = "status")
     private String status;
 
 

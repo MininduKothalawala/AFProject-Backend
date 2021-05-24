@@ -38,12 +38,15 @@ public class ConferenceService {
     }
 
     public List<Conference> getAllConference(){
-
         return conferenceRepository.findAll();
     }
 
     public List<Conference> getConferenceByStatus(String status){
         //return conferenceRepository.findByStatus("Pending");
         return conferenceRepository.findByStatus(status);
+    }
+
+    public Object getConferenceById(String id){
+        return conferenceRepository.findById(id);
     }
 }
