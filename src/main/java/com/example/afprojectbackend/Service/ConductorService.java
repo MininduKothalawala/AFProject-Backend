@@ -28,4 +28,8 @@ public class ConductorService {
     public void deleteConductor(String id){
         conductorRepository.deleteById(id);
     }
+
+    public Object getConductorById(String id){
+        return conductorRepository.findById(id);
+    }
 }

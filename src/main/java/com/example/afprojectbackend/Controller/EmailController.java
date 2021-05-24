@@ -44,24 +44,24 @@ public class EmailController {
         }
     }
 
-//    @PostMapping("/Email")
-//    public void sendToEditor(@RequestBody String email) {
-//
-//        //create mail sender
-//        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-//        mailSender.setHost(this.emailConfiguration.getHost());
-//        mailSender.setPort(this.emailConfiguration.getPort());
-//        mailSender.setUsername(this.emailConfiguration.getUsername());
-//        mailSender.setPassword(this.emailConfiguration.getPassword());
-//
-//        //create an email instance
-//        SimpleMailMessage mailMessage = new SimpleMailMessage();
-//        mailMessage.setFrom("it19184036@my.sliit.lk");
-//        mailMessage.setTo(email);
-//        mailMessage.setSubject("Conference details updated");
-//        mailMessage.setText("Conference details changed please check from the site. Thank You!!!");
-//
-//        //send E-mail
-//        mailSender.send(mailMessage);
-//    }
+    @PostMapping("/Email")
+    public void sendToEditor(@RequestBody String email) {
+
+        //create mail sender
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+        mailSender.setHost(this.emailConfiguration.getHost());
+        mailSender.setPort(this.emailConfiguration.getPort());
+        mailSender.setUsername(this.emailConfiguration.getUsername());
+        mailSender.setPassword(this.emailConfiguration.getPassword());
+
+        //create an email instance
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setFrom("it19184036@my.sliit.lk");
+        mailMessage.setTo(email);
+        mailMessage.setSubject("Conference details updated");
+        mailMessage.setText("Conference details changed please check from the site. Thank You!!!");
+
+        //send E-mail
+        mailSender.send(mailMessage);
+    }
 }

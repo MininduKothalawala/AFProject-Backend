@@ -40,4 +40,8 @@ public class AttendeeController {
         attendeeService.deleteAttendee(id);
     }
 
+    @GetMapping("getattendee/{id}")
+    public Object getAttendeeById(@PathVariable String id){
+        return attendeeService.getAttendeeById(id);
+    }
 }

@@ -26,4 +26,8 @@ public class ResearcherService {
     public void deleteResearcher(String id){
         researcherRepository.deleteById(id);
     }
+
+    public Object getResearcherById(String id){
+        return researcherRepository.findById(id);
+    }
 }
