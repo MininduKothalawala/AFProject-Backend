@@ -46,9 +46,10 @@ public class ConferenceController {
     public ResponseEntity<List<Conference>> getConferenceByStatus(@PathVariable String status){
         //return ResponseEntity.ok(conferenceService.getConferenceByStatus("Pending"));
         return ResponseEntity.ok(conferenceService.getConferenceByStatus(status));
-
-
     }
 
-
+    @GetMapping("/conferencebyid/{id}")
+    public Object getConferenceById(@PathVariable String id){
+        return ResponseEntity.ok(conferenceService.getConferenceById(id));
+    }
 }
