@@ -38,7 +38,6 @@ public class ConferenceService {
     }
 
     public List<Conference> getAllConference(){
-
         return conferenceRepository.findAll();
     }
 
@@ -51,6 +50,7 @@ public class ConferenceService {
         //return conferenceRepository.findByStatus("Pending");
         return conferenceRepository.findByStatus(status);
     }
+
 
     public void AproveConference(Conference conference){
 
@@ -66,6 +66,11 @@ public class ConferenceService {
 
 
         conferenceRepository.save(conference);
+    }
+
+    public Object getConferenceById(String id){
+        return conferenceRepository.findById(id);
+
     }
 }
 

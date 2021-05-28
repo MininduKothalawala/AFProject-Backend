@@ -19,19 +19,17 @@ public class ConferenceController {
     @Autowired
     private ConferenceRepository conferenceRepository;
 
-
     public ConferenceController(ConferenceService conferenceService) {
         this.conferenceService = conferenceService;
 
     }
 
 
-        @PostMapping("/addConference")
-        public ResponseEntity addConference(@RequestBody Conference conference){
+     @PostMapping("/addConference")
+     public ResponseEntity addConference(@RequestBody Conference conference){
 
             conferenceService.addConference(conference);
             return ResponseEntity.status(HttpStatus.CREATED).build();
-
     }
 
     @PutMapping("/updateConference/{id}")
@@ -46,7 +44,8 @@ public class ConferenceController {
     }
 
     @GetMapping("pendingConference/{status}")
-    public ResponseEntity<List<Conference>> getConferenceByStatus(@PathVariable String status){
+    public ResponseEntity<List<Conference>> getPendingConference(@PathVariable String status){
+
         return ResponseEntity.ok(conferenceService.getConferenceByStatus("Pending"));
         //return ResponseEntity.ok(conferenceService.getConferenceByStatus(status));
 
@@ -74,7 +73,11 @@ public class ConferenceController {
     public ResponseEntity<List<Conference>> approveConference(@RequestBody Conference conference){
         conferenceService.AproveConference(conference);
         return ResponseEntity.ok(conferenceService.getAllConference());
+
     }
 
-
+    @GetMapping("/conferencebyid/{id}")
+    public Object getConferenceById(@PathVariable String id){
+        return ResponseEntity.ok(conferenceService.getConferenceById(id));
+    }
 }
