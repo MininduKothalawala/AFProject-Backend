@@ -1,20 +1,13 @@
 package com.example.afprojectbackend.Model;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
-
-import java.io.InputStream;
 
 @Document("Template")
 public class Template {
     @Id
     private String id;
-    @Transient
-    private InputStream inputStream;
-    @Transient
-    private String contentType;
     @Field("tempTitle")
     private String tempTitle;
     @Field("tempDesc")
@@ -25,28 +18,30 @@ public class Template {
     private String username;
     @Field("tempFileId")
     private String tempFileId;
+    @Field("filename")
+    private String filename;
 
     public Template() {
     }
 
-    public Template(String id, InputStream inputStream, String contentType, String tempTitle,
-                    String tempDesc, String tempType, String username, String tempFileId) {
+    public Template(String id, String tempTitle,
+                    String tempDesc, String tempType, String username, String tempFileId, String filename) {
         this.id = id;
-        this.inputStream = inputStream;
-        this.contentType = contentType;
         this.tempTitle = tempTitle;
         this.tempDesc = tempDesc;
         this.tempType = tempType;
         this.username = username;
         this.tempFileId = tempFileId;
+        this.filename = filename;
     }
 
-    public Template(String tempTitle, String tempDesc, String tempType, String username, String tempFileId) {
+    public Template(String tempTitle, String tempDesc, String tempType, String username, String tempFileId, String filename) {
         this.tempTitle = tempTitle;
         this.tempDesc = tempDesc;
         this.tempType = tempType;
         this.username = username;
         this.tempFileId = tempFileId;
+        this.filename = filename;
     }
 
     public String getId() {
@@ -55,22 +50,6 @@ public class Template {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public InputStream getInputStream() {
-        return inputStream;
-    }
-
-    public void setInputStream(InputStream inputStream) {
-        this.inputStream = inputStream;
-    }
-
-    public String getContentType() {
-        return contentType;
-    }
-
-    public void setContentType(String contentType) {
-        this.contentType = contentType;
     }
 
     public String getTempTitle() {
@@ -111,5 +90,13 @@ public class Template {
 
     public void setTempFileId(String tempFileId) {
         this.tempFileId = tempFileId;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
 }
