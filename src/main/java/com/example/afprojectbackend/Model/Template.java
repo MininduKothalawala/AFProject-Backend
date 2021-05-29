@@ -8,9 +8,6 @@ import org.springframework.data.mongodb.core.mapping.Field;
 public class Template {
     @Id
     private String id;
-    @Field("tempTitle")
-    private String tempTitle;
-    @Field("tempDesc")
     private String tempDesc;
     @Field("tempType")
     private String tempType;
@@ -24,10 +21,8 @@ public class Template {
     public Template() {
     }
 
-    public Template(String id, String tempTitle,
-                    String tempDesc, String tempType, String username, String tempFileId, String filename) {
+    public Template(String id, String tempDesc, String tempType, String username, String tempFileId, String filename) {
         this.id = id;
-        this.tempTitle = tempTitle;
         this.tempDesc = tempDesc;
         this.tempType = tempType;
         this.username = username;
@@ -35,8 +30,7 @@ public class Template {
         this.filename = filename;
     }
 
-    public Template(String tempTitle, String tempDesc, String tempType, String username, String tempFileId, String filename) {
-        this.tempTitle = tempTitle;
+    public Template(String tempDesc, String tempType, String username, String tempFileId, String filename) {
         this.tempDesc = tempDesc;
         this.tempType = tempType;
         this.username = username;
@@ -50,14 +44,6 @@ public class Template {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getTempTitle() {
-        return tempTitle;
-    }
-
-    public void setTempTitle(String tempTitle) {
-        this.tempTitle = tempTitle;
     }
 
     public String getTempDesc() {

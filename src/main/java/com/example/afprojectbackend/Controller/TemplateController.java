@@ -74,18 +74,21 @@ public class TemplateController {
 
     //save template
     @PostMapping("/upload")
-    public ResponseEntity<?> uploadTemplate(@RequestParam("title") String title, @RequestParam("desc") String desc,
-                                            @RequestParam("type") String type, @RequestParam("username") String username,
+    public ResponseEntity<?> uploadTemplate(@RequestParam("desc") String desc, @RequestParam("type") String type,@RequestParam("username") String username,
                                             @RequestParam("file") MultipartFile file) throws IOException {
 
         //saving file to GridFS
         String id = templateService.addTemplate(type, username, file);
 
         //saving file to Mongo Collection
-        Template template = new Template(title,desc,type,username,id, file.getOriginalFilename());
+        Template template = new Template(desc,type,username,id, file.getOriginalFilename());
 
         return new ResponseEntity<>(templateRepository.save(template), HttpStatus.CREATED);
     }
+
+    //update description only
+
+
 
     //delete template
     @DeleteMapping("/{id}/{fileId}")
