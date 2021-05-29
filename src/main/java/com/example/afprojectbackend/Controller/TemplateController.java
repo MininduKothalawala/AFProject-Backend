@@ -87,8 +87,21 @@ public class TemplateController {
     }
 
     //update description only
+    @PutMapping("/updateDesc")
+    public ResponseEntity<?> updateDesc(@RequestParam("id") String id, @RequestParam("desc") String desc, @RequestParam("username") String username) {
+        String res = templateService.updateDescription(id, desc, username);
+        return ResponseEntity.ok(res);
+    }
 
+    //update all
+    @PutMapping("/update")
+    public ResponseEntity<?> updateTemplate(@RequestParam("id") String id, @RequestParam("desc") String desc,
+                                        @RequestParam("type") String type,@RequestParam("username") String username,
+                                        @RequestParam("file") MultipartFile file) throws IOException {
 
+        String res = templateService.updateWithFile(id, desc, type, username, file);
+        return ResponseEntity.ok(res);
+    }
 
     //delete template
     @DeleteMapping("/{id}/{fileId}")

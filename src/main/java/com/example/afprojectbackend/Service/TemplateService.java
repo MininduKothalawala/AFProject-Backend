@@ -1,12 +1,15 @@
 package com.example.afprojectbackend.Service;
 
+import com.example.afprojectbackend.Model.Template;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.client.gridfs.model.GridFSFile;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.data.mongodb.gridfs.GridFsOperations;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.stereotype.Service;
@@ -22,10 +25,13 @@ public class TemplateService {
 
     private final GridFsOperations operations;
 
+    private final MongoTemplate mongoTemplate;
+
     @Autowired
-    public TemplateService(GridFsTemplate gridFsTemplate, GridFsOperations operations) {
+    public TemplateService(GridFsTemplate gridFsTemplate, GridFsOperations operations, MongoTemplate mongoTemplate) {
         this.gridFsTemplate = gridFsTemplate;
         this.operations = operations;
+        this.mongoTemplate = mongoTemplate;
     }
 
     //add template
@@ -72,6 +78,72 @@ public class TemplateService {
         }
 
         return template;
+    }
+
+    //update description only
+    public String updateDescription(String id, String desc, String username) {
+        //find query
+        Query query = new Query();
+        query.addCriteria(Criteria.where("id").is(id)).fields().include("addedBy");
+
+        //get the added by username
+        Template user = mongoTemplate.findOne(query, Template.class);
+
+        //set update field
+        Update update = new Update();
+        update.set("tempDesc", desc);
+
+        //if content edited by other user, update username
+        if (user !=null &&  !user.getUsername().equals(username)) {
+            update.set("addedBy", username + "(edited)");
+        }
+
+        mongoTemplate.updateFirst(query, update, Template.class);
+
+        return id;
+    }
+
+    //update all
+    public String updateWithFile(String id, String desc, String type, String username, MultipartFile file) throws IOException {
+        //find and delete existing file
+        String fileId = deleteTemplate(id);
+        String newID = null;
+        String newUser = null;
+
+
+        if (fileId != null) {
+            //if file is deleted then insert new file
+            Query query = new Query();
+            query.addCriteria(Criteria.where("id").is(id));
+
+            //get the added by username
+            Template user = mongoTemplate.findOne(query, Template.class);
+
+            //if content edited by other user, update username
+            if (user != null &&  !user.getUsername().equals(username)) {
+                newUser = user.getUsername() + "(edited)";
+            } else {
+                newUser = username;
+            }
+
+            newID = addTemplate(type, newUser, file);
+
+            if (newID != null) {
+                //find query and update db
+
+                Update update = new Update();
+                update.set("tempDesc", desc);
+                update.set("tempType", type);
+                update.set("addedBy", newUser);
+                update.set("tempFileId", newID);
+                update.set("filename", file.getOriginalFilename());
+
+                mongoTemplate.updateFirst(query, update, Template.class);
+            }
+
+        }
+
+        return id;
     }
 
     //delete template
