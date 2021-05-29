@@ -21,7 +21,9 @@ public class AdminUserService {
     }
 
     public List<AdminUser> getAllAdminUsers(){
-        return adminUserRepository.findAll();
+        List <AdminUser> adminUsers = adminUserRepository.findAll();
+        System.out.println("admin user from db ::"+adminUsers);
+        return adminUsers;
     }
 
     public void deleteAdminUser(String id){
