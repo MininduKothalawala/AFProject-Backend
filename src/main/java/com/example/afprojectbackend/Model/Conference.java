@@ -12,11 +12,17 @@ public class Conference {
 
     @Field (name = "id")
     private String id;
+
     private String conferenceName;
+
     private String date;
+
     private String startingTime;
+
     private String endingTime;
+
     private String venue;
+
     private String status;
 
 

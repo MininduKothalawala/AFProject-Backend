@@ -41,12 +41,36 @@ public class ConferenceService {
         return conferenceRepository.findAll();
     }
 
+    public void deleteConference(String id) {
+
+        conferenceRepository.deleteById(id);
+    }
+
     public List<Conference> getConferenceByStatus(String status){
         //return conferenceRepository.findByStatus("Pending");
         return conferenceRepository.findByStatus(status);
     }
 
+
+    public void AproveConference(Conference conference){
+
+        Conference savedConference = conferenceRepository.findById(conference.getId())
+                .orElseThrow(() -> new RuntimeException(
+                        String.format("Cannot Find Expense by ID %s", conference.getId())));
+        savedConference.setConferenceName(conference.getConferenceName());
+        savedConference.setDate(conference.getDate());
+        savedConference.setStartingTime(conference.getStartingTime());
+        savedConference.setEndingTime(conference.getEndingTime());
+        savedConference.setVenue(conference.getVenue());
+        savedConference.setStatus("Approved");
+
+
+        conferenceRepository.save(conference);
+    }
+
     public Object getConferenceById(String id){
         return conferenceRepository.findById(id);
+
     }
 }
+
