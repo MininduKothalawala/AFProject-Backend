@@ -35,7 +35,7 @@ public class ResearcherService {
         this.operations = operations;
     }
 
-    public void addReasearcher(String name, String email, String mobile,
+    public void addReasearcher(String name, String email, String mobile, String conferenceId,
                                MultipartFile file) throws IOException {
 
         //define metadata for the file
@@ -52,6 +52,8 @@ public class ResearcherService {
             researcher.setR_mobileNo(mobile);
             researcher.setR_filename(file.getOriginalFilename());
             researcher.setR_fileId(fileId.toString());
+            researcher.setR_conferenceId(conferenceId);
+            researcher.setR_pay_status("Pending");
 
             researcherRepository.insert(researcher);
         }

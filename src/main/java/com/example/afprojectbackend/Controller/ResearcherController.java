@@ -24,9 +24,9 @@ public class ResearcherController {
     }
 
     @PostMapping("/addresearcher")
-    public ResponseEntity<?> addResearcher(@RequestParam("name") String name, @RequestParam("mail") String email,
-                                           @RequestParam("mobile") String mobile, @RequestParam("file") MultipartFile file) throws IOException {
-        researcherService.addReasearcher(name, email, mobile, file);
+    public ResponseEntity<?> addResearcher(@RequestParam("name") String name, @RequestParam("mail") String email, @RequestParam("mobile") String mobile,
+                                           @RequestParam("c_id") String conferenceId, @RequestParam("file") MultipartFile file) throws IOException {
+        researcherService.addReasearcher(name, email, mobile, conferenceId, file);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 

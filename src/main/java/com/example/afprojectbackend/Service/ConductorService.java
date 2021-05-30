@@ -35,7 +35,7 @@ public class ConductorService {
         this.operations = operations;
     }
 
-    public void addConductor(String name, String email, String mobile,
+    public void addConductor(String name, String email, String mobile, String conferenceId,
                                MultipartFile file) throws IOException {
 
         //define metadata for the file

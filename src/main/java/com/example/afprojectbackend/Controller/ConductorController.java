@@ -30,9 +30,9 @@ public class ConductorController {
 
 
     @PostMapping("/addconductor")
-    public ResponseEntity<?> addConductor(@RequestParam("name") String name, @RequestParam("mail") String email,
-                                           @RequestParam("mobile") String mobile, @RequestParam("file") MultipartFile file) throws IOException {
-        conductorService.addConductor(name, email, mobile, file);
+    public ResponseEntity<?> addConductor(@RequestParam("name") String name, @RequestParam("mail") String email, @RequestParam("mobile") String mobile,
+                                          @RequestParam("c_id") String conferenceId, @RequestParam("file") MultipartFile file) throws IOException {
+        conductorService.addConductor(name, email, mobile, conferenceId, file);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 

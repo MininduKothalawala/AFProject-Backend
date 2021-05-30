@@ -1,19 +1,17 @@
 package com.example.afprojectbackend.Model;
 
-import com.mongodb.internal.connection.Time;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
-import java.util.Date;
-
-@Document("conference")
+@Document("Conference")
 public class Conference {
 
     @Id
     private String id;
 
     private String conferenceName;
+
+    private String description;
 
     private String date;
 
@@ -26,9 +24,10 @@ public class Conference {
     private String status;
 
 
-    public Conference(String id, String conferenceName, String date, String startingTime, String endingTime, String venue, String status) {
+    public Conference(String id, String conferenceName, String description, String date, String startingTime, String endingTime, String venue, String status) {
         this.id = id;
         this.conferenceName = conferenceName;
+        this.description = description;
         this.date = date;
         this.startingTime = startingTime;
         this.endingTime = endingTime;
@@ -90,5 +89,13 @@ public class Conference {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

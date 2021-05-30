@@ -24,27 +24,26 @@ public class ConferenceController {
 
     }
 
+    @PostMapping("/addConference")
+    public ResponseEntity<?> addConference(@RequestBody Conference conference) {
 
-     @PostMapping("/addConference")
-     public ResponseEntity addConference(@RequestBody Conference conference){
-
-            conferenceService.addConference(conference);
-            return ResponseEntity.status(HttpStatus.CREATED).build();
+        conferenceService.addConference(conference);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("/updateConference/{id}")
-    public ResponseEntity<List<Conference>> updateConference(@RequestBody Conference conference){
+    public ResponseEntity<List<Conference>> updateConference(@RequestBody Conference conference) {
         conferenceService.updateConference(conference);
         return ResponseEntity.ok(conferenceService.getAllConference());
     }
 
     @GetMapping("/getAll")
-    public ResponseEntity<List<Conference>> getAllConference(){
+    public ResponseEntity<List<Conference>> getAllConference() {
         return ResponseEntity.ok(conferenceService.getAllConference());
     }
 
     @GetMapping("pendingConference/{status}")
-    public ResponseEntity<List<Conference>> getPendingConference(@PathVariable String status){
+    public ResponseEntity<List<Conference>> getPendingConference(@PathVariable String status) {
 
         return ResponseEntity.ok(conferenceService.getConferenceByStatus("Pending"));
         //return ResponseEntity.ok(conferenceService.getConferenceByStatus(status));
@@ -52,32 +51,32 @@ public class ConferenceController {
     }
 
     @GetMapping("approvedConference/{status}")
-    public ResponseEntity<List<Conference>> getApprovedConference(@PathVariable String status){
+    public ResponseEntity<List<Conference>> getApprovedConference(@PathVariable String status) {
         return ResponseEntity.ok(conferenceService.getConferenceByStatus("Approved"));
         //return ResponseEntity.ok(conferenceService.getConferenceByStatus(status));
     }
 
     @GetMapping("rejectedConference/{status}")
-    public ResponseEntity<List<Conference>> getRejectedConference(@PathVariable String status){
+    public ResponseEntity<List<Conference>> getRejectedConference(@PathVariable String status) {
         return ResponseEntity.ok(conferenceService.getConferenceByStatus("Rejected"));
         //return ResponseEntity.ok(conferenceService.getConferenceByStatus(status));
     }
 
     @DeleteMapping("/deleteConference/{id}")
-    public ResponseEntity deleteConference(@PathVariable String id) {
+    public ResponseEntity<?> deleteConference(@PathVariable String id) {
         conferenceService.deleteConference(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @PutMapping("/approveConference/{id}")
-    public ResponseEntity<List<Conference>> approveConference(@RequestBody Conference conference){
+    public ResponseEntity<List<Conference>> approveConference(@RequestBody Conference conference) {
         conferenceService.AproveConference(conference);
         return ResponseEntity.ok(conferenceService.getAllConference());
 
     }
 
     @GetMapping("/conferencebyid/{id}")
-    public Object getConferenceById(@PathVariable String id){
+    public Object getConferenceById(@PathVariable String id) {
         return ResponseEntity.ok(conferenceService.getConferenceById(id));
     }
 }

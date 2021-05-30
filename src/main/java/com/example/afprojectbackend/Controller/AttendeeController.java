@@ -25,7 +25,7 @@ public class AttendeeController {
     }
 
     @PostMapping("/addattendee")
-    public ResponseEntity addAttendee(@RequestBody Attendee attendee){
+    public ResponseEntity<?> addAttendee(@RequestBody Attendee attendee){
         attendeeService.addAttendee(attendee);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
