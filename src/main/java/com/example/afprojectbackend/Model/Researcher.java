@@ -11,12 +11,19 @@ public class Researcher {
     private String r_name;
     private String r_email;
     private String r_mobileNo;
+    private String r_filename;
+    private String r_fileId;
 
-    public Researcher(String r_id, String r_name, String r_email, String r_mobileNo) {
+    public Researcher() {
+    }
+
+    public Researcher(String r_id, String r_name, String r_email, String r_mobileNo, String r_filename, String r_fileId) {
         this.r_id = r_id;
         this.r_name = r_name;
         this.r_email = r_email;
         this.r_mobileNo = r_mobileNo;
+        this.r_filename = r_filename;
+        this.r_fileId = r_fileId;
     }
 
     public String getR_id() {
@@ -49,5 +56,21 @@ public class Researcher {
 
     public void setR_mobileNo(String r_mobileNo) {
         this.r_mobileNo = r_mobileNo;
+    }
+
+    public String getR_filename() {
+        return r_filename;
+    }
+
+    public void setR_filename(String r_filename) {
+        this.r_filename = r_filename;
+    }
+
+    public String getR_fileId() {
+        return r_fileId;
+    }
+
+    public void setR_fileId(String r_fileId) {
+        this.r_fileId = r_fileId;
     }
 }

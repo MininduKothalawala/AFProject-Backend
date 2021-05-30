@@ -1,32 +1,40 @@
 package com.example.afprojectbackend.Controller;
 
 import com.example.afprojectbackend.Model.Researcher;
-import com.example.afprojectbackend.Repository.ResearcherRepository;
 import com.example.afprojectbackend.Service.ResearcherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:8080")
 @RequestMapping("/api/researcher")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ResearcherController {
 
-    @Autowired
-    private ResearcherRepository researcherRepository;
+
 
     private final ResearcherService researcherService;
 
+    @Autowired
     public ResearcherController(ResearcherService researcherService) {
         this.researcherService = researcherService;
     }
 
+//    @PostMapping("/addresearcher")
+//    public ResponseEntity<?> addResearcher(@RequestBody Researcher researcher) {
+//        researcherService.addReasearcher(researcher);
+//        return ResponseEntity.status(HttpStatus.CREATED).build();
+//    }
+
     @PostMapping("/addresearcher")
-    public ResponseEntity addResearcher(@RequestBody Researcher researcher){
-        researcherService.addReasearcher(researcher);
+    public ResponseEntity<?> addResearcher(@RequestParam("name") String name, @RequestParam("mail") String email,
+                                           @RequestParam("mobile") String mobile, @RequestParam("file") MultipartFile file) throws IOException {
+        researcherService.addReasearcher(name, email, mobile, file);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
