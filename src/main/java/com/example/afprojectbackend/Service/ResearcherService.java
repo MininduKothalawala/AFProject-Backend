@@ -35,10 +35,6 @@ public class ResearcherService {
         this.operations = operations;
     }
 
-//    public void addReasearcher(Researcher researcher){
-//        researcherRepository.insert(researcher);
-//    }
-
     public void addReasearcher(String name, String email, String mobile,
                                MultipartFile file) throws IOException {
 
@@ -59,7 +55,6 @@ public class ResearcherService {
 
             researcherRepository.insert(researcher);
         }
-
 
     }
 

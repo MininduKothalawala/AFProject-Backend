@@ -16,20 +16,12 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 public class ResearcherController {
 
-
-
     private final ResearcherService researcherService;
 
     @Autowired
     public ResearcherController(ResearcherService researcherService) {
         this.researcherService = researcherService;
     }
-
-//    @PostMapping("/addresearcher")
-//    public ResponseEntity<?> addResearcher(@RequestBody Researcher researcher) {
-//        researcherService.addReasearcher(researcher);
-//        return ResponseEntity.status(HttpStatus.CREATED).build();
-//    }
 
     @PostMapping("/addresearcher")
     public ResponseEntity<?> addResearcher(@RequestParam("name") String name, @RequestParam("mail") String email,

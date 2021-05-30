@@ -1,25 +1,24 @@
 package com.example.afprojectbackend.Controller;
 
 import com.example.afprojectbackend.Model.Conductor;
-import com.example.afprojectbackend.Repository.ConductorRepository;
 import com.example.afprojectbackend.Service.ConductorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/conductor")
 public class ConductorController {
 
-    @Autowired
-    private ConductorRepository conductorRepository;
-
     private final ConductorService conductorService;
 
+    @Autowired
     public ConductorController(ConductorService conductorService) {
         this.conductorService = conductorService;
     }
@@ -29,9 +28,11 @@ public class ConductorController {
         return ResponseEntity.ok(conductorService.getAllConductors());
     }
 
+
     @PostMapping("/addconductor")
-    public ResponseEntity addConductor(@RequestBody Conductor conductor){
-        conductorService.addConductor(conductor);
+    public ResponseEntity<?> addConductor(@RequestParam("name") String name, @RequestParam("mail") String email,
+                                           @RequestParam("mobile") String mobile, @RequestParam("file") MultipartFile file) throws IOException {
+        conductorService.addConductor(name, email, mobile, file);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
