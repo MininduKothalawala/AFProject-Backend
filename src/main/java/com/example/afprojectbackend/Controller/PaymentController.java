@@ -23,7 +23,7 @@ public class PaymentController {
     }
 
     @PostMapping("/addcarddetails")
-    public ResponseEntity addCardDetails(@RequestBody PaymentDummy paymentDummy){
+    public ResponseEntity<?> addCardDetails(@RequestBody PaymentDummy paymentDummy){
         paymentService.addCardDetails(paymentDummy);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
