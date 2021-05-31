@@ -1,7 +1,6 @@
 package com.example.afprojectbackend.Controller;
 
 import com.example.afprojectbackend.Model.Attendee;
-import com.example.afprojectbackend.Repository.AttendeeRepository;
 import com.example.afprojectbackend.Service.AttendeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,11 +14,9 @@ import java.util.List;
 @RequestMapping("/api/attendee")
 public class AttendeeController {
 
-    @Autowired
-    private AttendeeRepository attendeeRepository;
-
     private final AttendeeService attendeeService;
 
+    @Autowired
     public AttendeeController(AttendeeService attendeeService) {
         this.attendeeService = attendeeService;
     }
@@ -35,13 +32,29 @@ public class AttendeeController {
         return ResponseEntity.ok(attendeeService.getAllAttendees());
     }
 
-    @DeleteMapping("/deleteattendee/{id}")
-    public void deleteAttendee(@PathVariable String id){
-        attendeeService.deleteAttendee(id);
-    }
-
     @GetMapping("getattendee/{id}")
     public Object getAttendeeById(@PathVariable String id){
         return attendeeService.getAttendeeById(id);
+    }
+
+    @GetMapping("/filter/a_conference/{id}")
+    public ResponseEntity<List<Attendee>> filterAttendeeByConferenceId(@PathVariable String id) {
+        return new ResponseEntity<>(attendeeService.getAttendeeByConferenceId(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/filter/a_pay/{status}")
+    public ResponseEntity<List<Attendee>> filterAttendeeByPayment(@PathVariable String status) {
+        return new ResponseEntity<>(attendeeService.PayStatusOfAttendee(status), HttpStatus.OK);
+    }
+
+    @PutMapping("/update/attendee/payment")
+    public ResponseEntity<?> updatePaymentStatus(@RequestParam("id") String id, @RequestParam("p_status") String status) {
+        attendeeService.updatePaymentStatus(id, status);
+        return new ResponseEntity<>(attendeeService.getAttendeeById(id), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/deleteattendee/{id}")
+    public void deleteAttendee(@PathVariable String id){
+        attendeeService.deleteAttendee(id);
     }
 }

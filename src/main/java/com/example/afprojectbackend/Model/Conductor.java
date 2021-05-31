@@ -14,11 +14,12 @@ public class Conductor {
     private String c_filename;
     private String c_fileId;
     private String c_conferenceId;
+    private String c_submission_status;
 
     public Conductor() {
     }
 
-    public Conductor(String c_id, String c_name, String c_email, String c_mobileNo, String c_filename, String c_fileId, String c_conferenceId) {
+    public Conductor(String c_id, String c_name, String c_email, String c_mobileNo, String c_filename, String c_fileId, String c_conferenceId, String c_submission_status) {
         this.c_id = c_id;
         this.c_name = c_name;
         this.c_email = c_email;
@@ -26,6 +27,7 @@ public class Conductor {
         this.c_filename = c_filename;
         this.c_fileId = c_fileId;
         this.c_conferenceId = c_conferenceId;
+        this.c_submission_status = c_submission_status;
     }
 
     public String getC_id() {
@@ -82,5 +84,13 @@ public class Conductor {
 
     public void setC_conferenceId(String c_conferenceId) {
         this.c_conferenceId = c_conferenceId;
+    }
+
+    public String getC_submission_status() {
+        return c_submission_status;
+    }
+
+    public void setC_submission_status(String c_submission_status) {
+        this.c_submission_status = c_submission_status;
     }
 }

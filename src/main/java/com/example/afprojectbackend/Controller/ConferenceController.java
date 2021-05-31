@@ -1,7 +1,6 @@
 package com.example.afprojectbackend.Controller;
 
 import com.example.afprojectbackend.Model.Conference;
-import com.example.afprojectbackend.Repository.ConferenceRepository;
 import com.example.afprojectbackend.Service.ConferenceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,9 +15,8 @@ import java.util.List;
 public class ConferenceController {
 
     private final ConferenceService conferenceService;
-    @Autowired
-    private ConferenceRepository conferenceRepository;
 
+    @Autowired
     public ConferenceController(ConferenceService conferenceService) {
         this.conferenceService = conferenceService;
 
@@ -44,22 +42,18 @@ public class ConferenceController {
 
     @GetMapping("pendingConference/{status}")
     public ResponseEntity<List<Conference>> getPendingConference(@PathVariable String status) {
-
         return ResponseEntity.ok(conferenceService.getConferenceByStatus("Pending"));
-        //return ResponseEntity.ok(conferenceService.getConferenceByStatus(status));
 
     }
 
     @GetMapping("approvedConference/{status}")
     public ResponseEntity<List<Conference>> getApprovedConference(@PathVariable String status) {
         return ResponseEntity.ok(conferenceService.getConferenceByStatus("Approved"));
-        //return ResponseEntity.ok(conferenceService.getConferenceByStatus(status));
     }
 
     @GetMapping("rejectedConference/{status}")
     public ResponseEntity<List<Conference>> getRejectedConference(@PathVariable String status) {
         return ResponseEntity.ok(conferenceService.getConferenceByStatus("Rejected"));
-        //return ResponseEntity.ok(conferenceService.getConferenceByStatus(status));
     }
 
     @DeleteMapping("/deleteConference/{id}")

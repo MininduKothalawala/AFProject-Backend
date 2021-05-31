@@ -36,13 +36,29 @@ public class ConductorController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @DeleteMapping("/deleteconductor/{id}")
-    public void deleteConductor(@PathVariable String id){
-        conductorService.deleteConductor(id);
-    }
-
     @GetMapping("/getconductor/{id}")
     public Object getConductorById(@PathVariable String id){
         return conductorService.getConductorById(id);
+    }
+
+    @GetMapping("/filter/c_approval/{status}")
+    public ResponseEntity<List<Conductor>> filterConductorBySubmissionStatus(@PathVariable String status) {
+        return new ResponseEntity<>(conductorService.ProposalApprovalStatus(status), HttpStatus.OK);
+    }
+
+    @GetMapping("/filter/c_conference/{id}")
+    public ResponseEntity<List<Conductor>> filterConductorByConferenceId(@PathVariable String id) {
+        return new ResponseEntity<>(conductorService.getConductorByConferenceId(id), HttpStatus.OK);
+    }
+
+    @PutMapping("/update/conductor/approval")
+    public ResponseEntity<?> updateSubmissionStatus(@RequestParam("id") String id, @RequestParam("s_status") String status) {
+        conductorService.updateSubmissionStatus(id, status);
+        return new ResponseEntity<>(conductorService.getConductorById(id), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/deleteconductor/{id}")
+    public void deleteConductor(@PathVariable String id){
+        conductorService.deleteConductor(id);
     }
 }
