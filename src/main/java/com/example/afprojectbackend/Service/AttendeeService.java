@@ -38,12 +38,12 @@ public class AttendeeService {
 
     //filter by conference Id
     public List<Attendee> getAttendeeByConferenceId(String cid) {
-        return attendeeRepository.findByA_conferenceId(cid);
+        return mongoTemplate.find(Query.query(Criteria.where("a_conferenceId").is(cid)), Attendee.class);
     }
 
     //filter by payment status
     public List<Attendee> PayStatusOfAttendee(String status) {
-        return attendeeRepository.findByA_payment_status(status);
+        return mongoTemplate.find(Query.query(Criteria.where("a_payment_status").is(status)), Attendee.class);
     }
 
     //update payment status

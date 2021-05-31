@@ -79,17 +79,17 @@ public class ResearcherService {
 
     //filter by payment status
     public List<Researcher> PayStatusOfResearcher(String status) {
-        return researcherRepository.findByR_pay_status(status);
+        return mongoTemplate.find(Query.query(Criteria.where("r_pay_status").is(status)), Researcher.class);
     }
 
     //filter by paper approval status
     public List<Researcher> PaperApprovalStatus(String status) {
-        return researcherRepository.findByR_submission_status(status);
+        return mongoTemplate.find(Query.query(Criteria.where("r_submission_status").is(status)), Researcher.class);
     }
 
     //filter by conference Id
     public List<Researcher> getResearcherByConferenceId(String cid) {
-        return researcherRepository.findByR_conferenceId(cid);
+        return mongoTemplate.find(Query.query(Criteria.where("r_conferenceId").is(cid)), Researcher.class);
     }
 
     //update approval

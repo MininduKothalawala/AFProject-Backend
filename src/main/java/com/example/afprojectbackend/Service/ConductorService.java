@@ -79,12 +79,12 @@ public class ConductorService {
 
     //filter by paper approval status
     public List<Conductor> ProposalApprovalStatus(String status) {
-        return conductorRepository.findByC_submission_status(status);
+        return mongoTemplate.find(Query.query(Criteria.where("c_submission_status").is(status)), Conductor.class);
     }
 
     //filter by conference Id
     public List<Conductor> getConductorByConferenceId(String cid) {
-        return conductorRepository.findByC_conferenceId(cid);
+        return mongoTemplate.find(Query.query(Criteria.where("c_conferenceId").is(cid)), Conductor.class);
     }
 
     //update approval
