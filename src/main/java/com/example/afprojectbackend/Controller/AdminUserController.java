@@ -4,6 +4,7 @@ import com.example.afprojectbackend.Model.AdminUser;
 import com.example.afprojectbackend.Repository.AdminUserRepository;
 import com.example.afprojectbackend.Service.AdminUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,7 @@ public class AdminUserController {
 
     @PostMapping("/addadminuser")
     public ResponseEntity addAdminUser(@RequestBody AdminUser adminUser){
-        System.out.println("adduser"+adminUser.getName());
+        System.out.println("adduser"+adminUser.getUsername());
         adminUserService.addAdminUser(adminUser);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
