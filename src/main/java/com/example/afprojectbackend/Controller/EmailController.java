@@ -1,27 +1,34 @@
 package com.example.afprojectbackend.Controller;
 
 import com.example.afprojectbackend.Model.EmailConfiguration;
+import com.example.afprojectbackend.Service.InformationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
-@RequestMapping("/api/sendemails")
+@RequestMapping("/api/sendEmails")
 public class EmailController {
+
+    private final InformationService informationService;
 
     @Autowired
     private EmailConfiguration emailConfiguration;
 
-//    List<String> emails = new ArrayList<>();
-//    List<String> Emails = new ArrayList<String>();
+    public EmailController(InformationService informationService) {
+        this.informationService = informationService;
+    }
 
+    @PostMapping("/Emails/{conferenceId}/{subject}/{emailBody}")
+    public void sendToAllAttendee(@PathVariable String conferenceId, @PathVariable String subject, @PathVariable String emailBody){
 
-    @PostMapping("/Emails")
-    public void sendToAllAttendee(@RequestBody String[] Emails){
+        List<String> emails = informationService.getEmailAddressesByConference(conferenceId);
 
-        for (int i=0; i<Emails.length; i++){
+        for (String email: emails){
             //create mail sender
             JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
             mailSender.setHost(this.emailConfiguration.getHost());
@@ -32,17 +39,17 @@ public class EmailController {
             //create an email instance
             SimpleMailMessage mailMessage = new SimpleMailMessage();
             mailMessage.setFrom("it19184036@my.sliit.lk");
-            mailMessage.setTo(Emails[i]);
-            mailMessage.setSubject("Conference details updated");
-            mailMessage.setText("Conference details changed please check from the site. Thank You!!!");
+            mailMessage.setTo(email);
+            mailMessage.setSubject(subject);
+            mailMessage.setText(emailBody);
 
             //send E-mail
             mailSender.send(mailMessage);
         }
     }
 
-    @PostMapping("/Email")
-    public void sendToEditor(@RequestBody String email) {
+    @PostMapping("/Email/{email}/{subject}/{emailBody}")
+    public void sendToEditor(@PathVariable String email, @PathVariable String subject, @PathVariable String emailBody) {
 
         //create mail sender
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
@@ -55,8 +62,8 @@ public class EmailController {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setFrom("it19184036@my.sliit.lk");
         mailMessage.setTo(email);
-        mailMessage.setSubject("Conference details updated");
-        mailMessage.setText("Conference details changed please check from the site. Thank You!!!");
+        mailMessage.setSubject(subject);
+        mailMessage.setText(emailBody);
 
         //send E-mail
         mailSender.send(mailMessage);

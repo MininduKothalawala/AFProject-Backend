@@ -2,33 +2,30 @@ package com.example.afprojectbackend.Model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document("Conference")
 public class Conference {
 
     @Id
     private String id;
-
     private String conferenceName;
-
     private String description;
-
     private String startingDate;
-
     private String endingDate;
-
     private String venue;
-
     private String status;
-
     private String payment;
 
-    public Conference(String id, String conferenceName, String description, String date, String startingTime, String endingTime, String venue, String status) {
+    public Conference() {
+    }
+
+    public Conference(String id, String conferenceName, String description, String startingDate, String endingDate, String venue, String status, String payment) {
         this.id = id;
         this.conferenceName = conferenceName;
         this.description = description;
-        this.startingTime = startingTime;
-        this.endingTime = endingTime;
+        this.startingDate = startingDate;
+        this.endingDate = endingDate;
         this.venue = venue;
         this.status = status;
         this.payment = payment;
