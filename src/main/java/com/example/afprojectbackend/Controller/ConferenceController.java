@@ -25,14 +25,14 @@ public class ConferenceController {
     }
 
 
-     @PostMapping("/addConference")
-     public ResponseEntity addConference(@RequestBody Conference conference){
+    @PostMapping("/addConference")
+    public ResponseEntity addConference(@RequestBody Conference conference){
 
-            conferenceService.addConference(conference);
-            return ResponseEntity.status(HttpStatus.CREATED).build();
+        conferenceService.addConference(conference);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PutMapping("/updateConference/{id}")
+    @PutMapping("/updateConference")
     public ResponseEntity<List<Conference>> updateConference(@RequestBody Conference conference){
         conferenceService.updateConference(conference);
         return ResponseEntity.ok(conferenceService.getAllConference());

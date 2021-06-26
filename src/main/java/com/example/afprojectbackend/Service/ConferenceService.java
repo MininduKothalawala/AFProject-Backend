@@ -27,6 +27,7 @@ public class ConferenceService {
                 .orElseThrow(() -> new RuntimeException(
                         String.format("Cannot Find Expense by ID %s", conference.getId())));
         savedConference.setConferenceName(conference.getConferenceName());
+        savedConference.setConferenceName(conference.getDescription());
         savedConference.setDate(conference.getDate());
         savedConference.setStartingTime(conference.getStartingTime());
         savedConference.setEndingTime(conference.getEndingTime());
