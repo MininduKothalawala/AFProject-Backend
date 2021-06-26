@@ -29,6 +29,7 @@ public class ConferenceService {
         savedConference.setConferenceName(conference.getConferenceName());
         savedConference.setStartingDate(conference.getStartingDate());
         savedConference.setEndingDate(conference.getEndingDate());
+        savedConference.setConferenceName(conference.getDescription());
         savedConference.setVenue(conference.getVenue());
         savedConference.setStatus(conference.getStatus());
 

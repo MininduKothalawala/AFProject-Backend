@@ -31,6 +31,7 @@ public class ConferenceController {
 
     @PutMapping("/updateConference/{id}")
     public ResponseEntity<List<Conference>> updateConference(@RequestBody Conference conference) {
+
         conferenceService.updateConference(conference);
         return ResponseEntity.ok(conferenceService.getAllConference());
     }
