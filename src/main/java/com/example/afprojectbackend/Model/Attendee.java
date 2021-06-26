@@ -11,12 +11,19 @@ public class Attendee {
     private String a_name;
     private String a_email;
     private String a_mobileNo;
+    private String a_conferenceId;
+    private String a_payment_status;
 
-    public Attendee(String a_id, String a_name, String a_email, String a_mobileNo) {
+    public Attendee() {
+    }
+
+    public Attendee(String a_id, String a_name, String a_email, String a_mobileNo, String a_conferenceId, String a_payment_status) {
         this.a_id = a_id;
         this.a_name = a_name;
         this.a_email = a_email;
         this.a_mobileNo = a_mobileNo;
+        this.a_conferenceId = a_conferenceId;
+        this.a_payment_status = a_payment_status;
     }
 
     public String getA_id() {
@@ -49,5 +56,21 @@ public class Attendee {
 
     public void setA_mobileNo(String a_mobileNo) {
         this.a_mobileNo = a_mobileNo;
+    }
+
+    public String getA_conferenceId() {
+        return a_conferenceId;
+    }
+
+    public void setA_conferenceId(String a_conferenceId) {
+        this.a_conferenceId = a_conferenceId;
+    }
+
+    public String getA_payment_status() {
+        return a_payment_status;
+    }
+
+    public void setA_payment_status(String a_payment_status) {
+        this.a_payment_status = a_payment_status;
     }
 }
