@@ -21,8 +21,10 @@ public class Conference {
 
     private String status;
 
+    private String payment;
 
-    public Conference(String id, String conferenceName, String description, String startingDate, String endingDate, String venue, String status) {
+
+    public Conference(String id, String conferenceName, String description, String startingDate, String endingDate, String venue, String status, String payment) {
         this.id = id;
         this.conferenceName = conferenceName;
         this.description = description;
@@ -30,6 +32,7 @@ public class Conference {
         this.endingDate = endingDate;
         this.venue = venue;
         this.status = status;
+        this.payment = payment;
     }
 
     public String getId() {
@@ -86,5 +89,13 @@ public class Conference {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getPayment() {
+        return payment;
+    }
+
+    public void setPayment(String payment) {
+        this.payment = payment;
     }
 }
