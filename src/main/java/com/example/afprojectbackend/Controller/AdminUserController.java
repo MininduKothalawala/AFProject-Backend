@@ -26,8 +26,9 @@ public class AdminUserController {
     }
 
     @PostMapping("/addadminuser")
-    public ResponseEntity addAdminUser(@RequestBody AdminUser adminUser){
-        System.out.println("adduser"+adminUser.getUsername());
+
+    public ResponseEntity<?> addAdminUser(@RequestBody AdminUser adminUser){
+        System.out.println("adduser"+adminUser.getName());
         adminUserService.addAdminUser(adminUser);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -37,16 +38,15 @@ public class AdminUserController {
         return ResponseEntity.ok(adminUserService.getAllAdminUsers());
     }
 
-    @DeleteMapping("/deleteuser/{id}")
-    public void deleteAdminUser(@PathVariable String id){
-        adminUserService.deleteAdminUser(id);
-//        return ResponseEntity.ok(adminUserService.deleteAdminUser(id));
-    }
-
     @GetMapping("/getadminuser/{username}")
     public Object getAdminUser(@PathVariable String username){
         System.out.println("admin name :"+username);
         return ResponseEntity.ok(adminUserService.getAdminByUsername(username));
 
+    }
+
+    @DeleteMapping("/deleteuser/{id}")
+    public void deleteAdminUser(@PathVariable String id){
+        adminUserService.deleteAdminUser(id);
     }
 }

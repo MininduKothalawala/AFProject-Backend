@@ -1,13 +1,9 @@
 package com.example.afprojectbackend.Model;
 
-import com.mongodb.internal.connection.Time;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
-import java.util.Date;
-
-@Document("conference")
+@Document("Conference")
 public class Conference {
 
     @Id
@@ -17,26 +13,25 @@ public class Conference {
 
     private String description;
 
-    private String date;
+    private String startingDate;
 
-    private String startingTime;
-
-    private String endingTime;
+    private String endingDate;
 
     private String venue;
 
     private String status;
 
+    private String payment;
 
     public Conference(String id, String conferenceName, String description, String date, String startingTime, String endingTime, String venue, String status) {
         this.id = id;
         this.conferenceName = conferenceName;
         this.description = description;
-        this.date = date;
         this.startingTime = startingTime;
         this.endingTime = endingTime;
         this.venue = venue;
         this.status = status;
+        this.payment = payment;
     }
 
     public String getId() {
@@ -55,28 +50,20 @@ public class Conference {
         this.conferenceName = conferenceName;
     }
 
-    public String getDate() {
-        return date;
+    public String getStartingDate() {
+        return startingDate;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setStartingDate(String startingDate) {
+        this.startingDate = startingDate;
     }
 
-    public String getStartingTime() {
-        return startingTime;
+    public String getEndingDate() {
+        return endingDate;
     }
 
-    public void setStartingTime(String startingTime) {
-        this.startingTime = startingTime;
-    }
-
-    public String getEndingTime() {
-        return endingTime;
-    }
-
-    public void setEndingTime(String endingTime) {
-        this.endingTime = endingTime;
+    public void setEndingDate(String endingDate) {
+        this.endingDate = endingDate;
     }
 
     public String getVenue() {
@@ -102,4 +89,13 @@ public class Conference {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public String getPayment() {
+        return payment;
+    }
+
+    public void setPayment(String payment) {
+        this.payment = payment;
+    }
+
 }

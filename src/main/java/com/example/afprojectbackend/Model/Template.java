@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 public class Template {
     @Id
     private String id;
+    @Field("tempDesc")
     private String tempDesc;
     @Field("tempType")
     private String tempType;

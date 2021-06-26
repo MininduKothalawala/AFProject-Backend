@@ -65,7 +65,7 @@ public class TemplateService {
         return file;
     }
 
-    //sending filename and content type through hashmap
+    //sending filename and content type through hashmap -part of DOWNLOAD
     public HashMap<String, String> getDetailsOfFile(String id) {
         //find file from DB
         GridFSFile gridFSFile = gridFsTemplate.findOne(new Query(Criteria.where("_id").is(id)));
@@ -86,7 +86,10 @@ public class TemplateService {
         Query query = new Query();
         query.addCriteria(Criteria.where("id").is(id)).fields().include("addedBy");
 
-        //get the added by username
+        /*
+         * get the added by username,
+         * to check which user is editing
+         */
         Template user = mongoTemplate.findOne(query, Template.class);
 
         //set update field
