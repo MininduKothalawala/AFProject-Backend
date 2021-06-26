@@ -6,9 +6,6 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @RestController
 @CrossOrigin(origins = "http://localhost:8080")
 @RequestMapping("/api/sendemails")
@@ -16,10 +13,6 @@ public class EmailController {
 
     @Autowired
     private EmailConfiguration emailConfiguration;
-
-//    List<String> emails = new ArrayList<>();
-//    List<String> Emails = new ArrayList<String>();
-
 
     @PostMapping("/Emails")
     public void sendToAllAttendee(@RequestBody String[] Emails){
