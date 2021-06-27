@@ -1,7 +1,6 @@
 package com.example.afprojectbackend.Controller;
 
 import com.example.afprojectbackend.Model.PaymentDummy;
-import com.example.afprojectbackend.Repository.PaymentRepository;
 import com.example.afprojectbackend.Service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,11 +12,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/payment")
 public class PaymentController {
 
-    @Autowired
-    private PaymentRepository paymentRepository;
-
     private final PaymentService paymentService;
 
+    @Autowired
     public PaymentController(PaymentService paymentService) {
         this.paymentService = paymentService;
     }
