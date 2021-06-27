@@ -52,20 +52,20 @@ public class ConferenceService {
     }
 
 
-    public void ApproveConference(Conference conference) {
-
-        Conference savedConference = conferenceRepository.findById(conference.getId())
-                .orElseThrow(() -> new RuntimeException(
-                        String.format("Cannot Find Expense by ID %s", conference.getId())));
-        savedConference.setConferenceName(conference.getConferenceName());
-        savedConference.setStartingDate(conference.getStartingDate());
-        savedConference.setEndingDate(conference.getEndingDate());
-        savedConference.setVenue(conference.getVenue());
-        savedConference.setStatus("Approved");
-
-
-        conferenceRepository.save(conference);
-    }
+//    public void ApproveConference(Conference conference) {
+//
+//        Conference savedConference = conferenceRepository.findById(conference.getId())
+//                .orElseThrow(() -> new RuntimeException(
+//                        String.format("Cannot Find Expense by ID %s", conference.getId())));
+//        savedConference.setConferenceName(conference.getConferenceName());
+//        savedConference.setStartingDate(conference.getStartingDate());
+//        savedConference.setEndingDate(conference.getEndingDate());
+//        savedConference.setVenue(conference.getVenue());
+//        savedConference.setStatus("Approved");
+//
+//
+//        conferenceRepository.save(conference);
+//    }
 
     public Object getConferenceById(String id) {
         return conferenceRepository.findById(id);

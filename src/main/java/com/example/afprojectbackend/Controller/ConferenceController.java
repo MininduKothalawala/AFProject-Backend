@@ -82,11 +82,11 @@ public class ConferenceController {
         return ResponseEntity.ok(conferenceService.getConferenceById(id));
     }
 
-    @PutMapping("/approveConference/{id}")
-    public ResponseEntity<List<Conference>> approveConference(@RequestBody Conference conference) {
-        conferenceService.ApproveConference(conference);
-        return ResponseEntity.ok(conferenceService.getAllConference());
-    }
+//    @PutMapping("/approveConference/{id}")
+//    public ResponseEntity<List<Conference>> approveConference(@RequestBody Conference conference) {
+//        conferenceService.ApproveConference(conference);
+//        return ResponseEntity.ok(conferenceService.getAllConference());
+//    }
 
     @PutMapping("/updateStatus/{id}/{status}")
     public ResponseEntity<List<Conference>> cancelConference(@PathVariable String id, @PathVariable String status) {
