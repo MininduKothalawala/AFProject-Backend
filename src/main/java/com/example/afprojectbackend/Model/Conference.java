@@ -23,13 +23,12 @@ public class Conference {
 
     private String payment;
 
-
-    public Conference(String id, String conferenceName, String description, String startingDate, String endingDate, String venue, String status, String payment) {
+    public Conference(String id, String conferenceName, String description, String date, String startingTime, String endingTime, String venue, String status) {
         this.id = id;
         this.conferenceName = conferenceName;
         this.description = description;
-        this.startingDate = startingDate;
-        this.endingDate = endingDate;
+        this.startingTime = startingTime;
+        this.endingTime = endingTime;
         this.venue = venue;
         this.status = status;
         this.payment = payment;
@@ -98,4 +97,5 @@ public class Conference {
     public void setPayment(String payment) {
         this.payment = payment;
     }
+
 }
