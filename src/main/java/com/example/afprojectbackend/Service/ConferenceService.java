@@ -2,6 +2,7 @@ package com.example.afprojectbackend.Service;
 
 import com.example.afprojectbackend.Model.Conference;
 import com.example.afprojectbackend.Repository.ConferenceRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,17 +12,17 @@ public class ConferenceService {
 
     private final ConferenceRepository conferenceRepository;
 
-
+    @Autowired
     public ConferenceService(ConferenceRepository conferenceRepository) {
         this.conferenceRepository = conferenceRepository;
     }
 
-    public void addConference(Conference conference){
+    public void addConference(Conference conference) {
 
         conferenceRepository.insert(conference);
     }
 
-    public void updateConference(Conference conference){
+    public void updateConference(Conference conference) {
 
         Conference savedConference = conferenceRepository.findById(conference.getId())
                 .orElseThrow(() -> new RuntimeException(
@@ -33,11 +34,11 @@ public class ConferenceService {
         savedConference.setVenue(conference.getVenue());
         savedConference.setStatus(conference.getStatus());
 
-
         conferenceRepository.save(conference);
+
     }
 
-    public List<Conference> getAllConference(){
+    public List<Conference> getAllConference() {
         return conferenceRepository.findAll();
     }
 
@@ -46,12 +47,12 @@ public class ConferenceService {
         conferenceRepository.deleteById(id);
     }
 
-    public List<Conference> getConferenceByStatus(String status){
+    public List<Conference> getConferenceByStatus(String status) {
         return conferenceRepository.findByStatus(status);
     }
 
 
-    public void AproveConference(Conference conference){
+    public void ApproveConference(Conference conference) {
 
         Conference savedConference = conferenceRepository.findById(conference.getId())
                 .orElseThrow(() -> new RuntimeException(
@@ -66,11 +67,17 @@ public class ConferenceService {
         conferenceRepository.save(conference);
     }
 
-    public Object getConferenceById(String id){
+    public Object getConferenceById(String id) {
         return conferenceRepository.findById(id);
-
     }
 
+    public void changeStatus(String id, String status) {
+
+        Conference conference = conferenceRepository.findConferenceById(id);
+        conference.setStatus(status);
+
+        conferenceRepository.save(conference);
+    }
 
 }
 

@@ -28,7 +28,7 @@ public class ConferenceController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PutMapping("/updateConference/{id}")
+    @PutMapping("/updateConference")
     public ResponseEntity<List<Conference>> updateConference(@RequestBody Conference conference) {
 
         conferenceService.updateConference(conference);
@@ -77,14 +77,20 @@ public class ConferenceController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @PutMapping("/approveConference/{id}")
-    public ResponseEntity<List<Conference>> approveConference(@RequestBody Conference conference) {
-        conferenceService.AproveConference(conference);
-        return ResponseEntity.ok(conferenceService.getAllConference());
-    }
-
     @GetMapping("/conferencebyid/{id}")
     public Object getConferenceById(@PathVariable String id) {
         return ResponseEntity.ok(conferenceService.getConferenceById(id));
+    }
+
+    @PutMapping("/approveConference/{id}")
+    public ResponseEntity<List<Conference>> approveConference(@RequestBody Conference conference) {
+        conferenceService.ApproveConference(conference);
+        return ResponseEntity.ok(conferenceService.getAllConference());
+    }
+
+    @PutMapping("/updateStatus/{id}/{status}")
+    public ResponseEntity<List<Conference>> cancelConference(@PathVariable String id, @PathVariable String status) {
+        conferenceService.changeStatus(id, status);
+        return ResponseEntity.ok(conferenceService.getAllConference());
     }
 }
