@@ -19,7 +19,6 @@ public class ConferenceController {
     @Autowired
     public ConferenceController(ConferenceService conferenceService) {
         this.conferenceService = conferenceService;
-
     }
 
     @PostMapping("/addConference")
@@ -85,7 +84,6 @@ public class ConferenceController {
     public ResponseEntity<List<Conference>> approveConference(@RequestBody Conference conference) {
         conferenceService.AproveConference(conference);
         return ResponseEntity.ok(conferenceService.getAllConference());
-
     }
 
     @GetMapping("/conferencebyid/{id}")
