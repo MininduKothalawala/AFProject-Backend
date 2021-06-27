@@ -57,7 +57,7 @@ public class ConferenceController {
     }
     @GetMapping("editedConference/{status}")
     public ResponseEntity<List<Conference>> getEditedConference(@PathVariable String status){
-        return ResponseEntity.ok(conferenceService.getConferenceByStatus("Edited"));
+        return ResponseEntity.ok(conferenceService.getConferenceByStatus("Updated"));
     }
 
     @GetMapping("expiredConference/{status}")
