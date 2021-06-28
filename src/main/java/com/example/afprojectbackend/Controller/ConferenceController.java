@@ -44,7 +44,6 @@ public class ConferenceController {
     @GetMapping("pendingConference/{status}")
     public ResponseEntity<List<Conference>> getPendingConference(@PathVariable String status) {
         return ResponseEntity.ok(conferenceService.getConferenceByStatus("Pending"));
-
     }
 
     @GetMapping("approvedConference/{status}")
@@ -67,7 +66,6 @@ public class ConferenceController {
     public ResponseEntity<List<Conference>> approveConference(@RequestBody Conference conference) {
         conferenceService.AproveConference(conference);
         return ResponseEntity.ok(conferenceService.getAllConference());
-
     }
 
     @GetMapping("/conferencebyid/{id}")

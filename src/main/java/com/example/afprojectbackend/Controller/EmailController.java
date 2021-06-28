@@ -23,9 +23,11 @@ public class EmailController {
         this.informationService = informationService;
     }
 
+    //for multiple emails sending at one time
     @PostMapping("/Emails/{conferenceId}/{subject}/{emailBody}")
     public void sendToAllAttendee(@PathVariable String conferenceId, @PathVariable String subject, @PathVariable String emailBody){
 
+        //get the all user emails according a conference
         List<String> emails = informationService.getEmailAddressesByConference(conferenceId);
 
         for (String email: emails){
@@ -48,6 +50,7 @@ public class EmailController {
         }
     }
 
+    //for single email sending
     @PostMapping("/Email/{email}/{subject}/{emailBody}")
     public void sendToEditor(@PathVariable String email, @PathVariable String subject, @PathVariable String emailBody) {
 
