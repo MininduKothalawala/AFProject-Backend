@@ -41,7 +41,6 @@ public class AdminUserController {
     public Object getAdminUser(@PathVariable String username){
         System.out.println("admin name :"+username);
         return ResponseEntity.ok(adminUserService.getAdminByUsername(username));
-
     }
 
     @DeleteMapping("/deleteuser/{id}")
