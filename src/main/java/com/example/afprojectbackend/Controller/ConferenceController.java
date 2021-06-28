@@ -89,7 +89,7 @@ public class ConferenceController {
 //    }
 
     @PutMapping("/updateStatus/{id}/{status}")
-    public ResponseEntity<List<Conference>> cancelConference(@PathVariable String id, @PathVariable String status) {
+    public ResponseEntity<List<Conference>> updateConferenceStatus(@PathVariable String id, @PathVariable String status) {
         conferenceService.changeStatus(id, status);
         return ResponseEntity.ok(conferenceService.getAllConference());
     }

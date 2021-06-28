@@ -9,7 +9,6 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
-import org.springframework.data.mongodb.gridfs.GridFsOperations;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,16 +25,13 @@ public class ResearcherService {
 
     private final GridFsTemplate gridFsTemplate;
 
-    private final GridFsOperations operations;
-
 
     @Autowired
     public ResearcherService(ResearcherRepository researcherRepository, MongoTemplate mongoTemplate,
-                             GridFsTemplate gridFsTemplate, GridFsOperations operations) {
+                             GridFsTemplate gridFsTemplate) {
         this.researcherRepository = researcherRepository;
         this.mongoTemplate = mongoTemplate;
         this.gridFsTemplate = gridFsTemplate;
-        this.operations = operations;
     }
 
     //insert
@@ -83,7 +79,7 @@ public class ResearcherService {
     }
 
     //filter by paper approval status
-    public List<Researcher> PaperApprovalStatus(String status) {
+    public List<Researcher> PaperSubmissionStatus(String status) {
         return mongoTemplate.find(Query.query(Criteria.where("r_submission_status").is(status)), Researcher.class);
     }
 
@@ -112,11 +108,6 @@ public class ResearcherService {
         update.set("r_pay_status", payStatus);
 
         mongoTemplate.updateFirst(query, update, Researcher.class);
-    }
-
-    //delete
-    public void deleteResearcher(String id) {
-        researcherRepository.deleteById(id);
     }
 
 }
