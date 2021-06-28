@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:8080")
 @RequestMapping("/api/conference")
 public class ConferenceController {
 
@@ -19,7 +19,6 @@ public class ConferenceController {
     @Autowired
     public ConferenceController(ConferenceService conferenceService) {
         this.conferenceService = conferenceService;
-
     }
 
     @PostMapping("/addConference")
@@ -54,6 +53,24 @@ public class ConferenceController {
     @GetMapping("rejectedConference/{status}")
     public ResponseEntity<List<Conference>> getRejectedConference(@PathVariable String status) {
         return ResponseEntity.ok(conferenceService.getConferenceByStatus("Rejected"));
+    }
+    @GetMapping("editedConference/{status}")
+    public ResponseEntity<List<Conference>> getEditedConference(@PathVariable String status){
+        return ResponseEntity.ok(conferenceService.getConferenceByStatus("Edited"));
+        //return ResponseEntity.ok(conferenceService.getConferenceByStatus(status));
+    }
+
+    @GetMapping("expiredConference/{status}")
+    public ResponseEntity<List<Conference>> getExpiredConference(@PathVariable String status){
+        return ResponseEntity.ok(conferenceService.getConferenceByStatus("Expired"));
+        //return ResponseEntity.ok(conferenceService.getConferenceByStatus(status));
+    }
+
+    @GetMapping("canceledConference/{status}")
+    public ResponseEntity<List<Conference>> getCanceledConference(@PathVariable String status){
+        return ResponseEntity.ok(conferenceService.getConferenceByStatus("Canceled"));
+        //return ResponseEntity.ok(conferenceService.getConferenceByStatus(status));
+
     }
 
     @DeleteMapping("/deleteConference/{id}")
