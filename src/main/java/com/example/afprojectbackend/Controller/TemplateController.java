@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -57,7 +58,7 @@ public class TemplateController {
         return new ResponseEntity<>(templateRepository.findByUsernameContains(user), HttpStatus.OK);
     }
 
-    //retrieve template file
+    //retrieve file
     @GetMapping("/download/{id}")
     public ResponseEntity<ByteArrayResource> downloadTemplate(@PathVariable String id) throws IOException {
         byte[] template = templateService.downloadTemplate(id);
@@ -71,17 +72,16 @@ public class TemplateController {
                 .body(new ByteArrayResource(template));
     }
 
-
     //save template
     @PostMapping("/upload")
-    public ResponseEntity<?> uploadTemplate(@RequestParam("desc") String desc, @RequestParam("type") String type,@RequestParam("username") String username,
-                                            @RequestParam("file") MultipartFile file) throws IOException {
+    public ResponseEntity<?> uploadTemplate(@RequestParam("desc") String desc, @RequestParam("type") String type,@RequestParam("addedBy") String addedBy,
+                                            @RequestParam("tempImg") MultipartFile tempImg, @RequestParam("tempFile") MultipartFile tempFile) throws IOException {
 
         //saving file to GridFS
-        String id = templateService.addTemplate(type, username, file);
+        List<String> IDList = templateService.addTemplate(type, addedBy, tempImg, tempFile);
 
         //saving file to Mongo Collection
-        Template template = new Template(desc,type,username,id, file.getOriginalFilename());
+        Template template = new Template(desc,type, addedBy, IDList.get(0), tempImg.getOriginalFilename(), IDList.get(1), tempFile.getOriginalFilename());
 
         return new ResponseEntity<>(templateRepository.save(template), HttpStatus.CREATED);
     }
@@ -94,14 +94,14 @@ public class TemplateController {
     }
 
     //update all
-    @PutMapping("/update")
-    public ResponseEntity<?> updateTemplate(@RequestParam("id") String id, @RequestParam("desc") String desc,
-                                        @RequestParam("type") String type,@RequestParam("username") String username,
-                                        @RequestParam("file") MultipartFile file) throws IOException {
-
-        String res = templateService.updateWithFile(id, desc, type, username, file);
-        return ResponseEntity.ok(res);
-    }
+//    @PutMapping("/update")
+//    public ResponseEntity<?> updateTemplate(@RequestParam("id") String id, @RequestParam("desc") String desc,
+//                                        @RequestParam("type") String type,@RequestParam("username") String username,
+//                                        @RequestParam("file") MultipartFile file) throws IOException {
+//
+//        String res = templateService.updateWithFile(id, desc, type, username, file);
+//        return ResponseEntity.ok(res);
+//    }
 
     //delete template
     @DeleteMapping("/{id}/{fileId}")
