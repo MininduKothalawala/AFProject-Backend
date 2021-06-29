@@ -1,7 +1,6 @@
 package com.example.afprojectbackend.Service;
 
 import com.example.afprojectbackend.Model.Conductor;
-import com.example.afprojectbackend.Model.Researcher;
 import com.example.afprojectbackend.Repository.ConductorRepository;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
@@ -10,7 +9,6 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
-import org.springframework.data.mongodb.gridfs.GridFsOperations;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,16 +25,13 @@ public class ConductorService {
 
     private final GridFsTemplate gridFsTemplate;
 
-    private final GridFsOperations operations;
-
 
     @Autowired
     public ConductorService(ConductorRepository conductorRepository, MongoTemplate mongoTemplate,
-                             GridFsTemplate gridFsTemplate, GridFsOperations operations) {
+                             GridFsTemplate gridFsTemplate) {
         this.conductorRepository = conductorRepository;
         this.mongoTemplate = mongoTemplate;
         this.gridFsTemplate = gridFsTemplate;
-        this.operations = operations;
     }
 
     //insert
@@ -95,11 +90,6 @@ public class ConductorService {
         Update update = new Update();
         update.set("c_submission_status", status);
 
-        mongoTemplate.updateFirst(query, update, Researcher.class);
-    }
-
-    //delete
-    public void deleteConductor(String id){
-        conductorRepository.deleteById(id);
+        mongoTemplate.updateFirst(query, update, Conductor.class);
     }
 }

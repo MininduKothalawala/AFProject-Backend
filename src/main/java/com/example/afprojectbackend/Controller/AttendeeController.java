@@ -47,14 +47,14 @@ public class AttendeeController {
         return new ResponseEntity<>(attendeeService.PayStatusOfAttendee(status), HttpStatus.OK);
     }
 
-    @PutMapping("/update/attendee/payment")
+    @PutMapping("/update/payment/status")
     public ResponseEntity<?> updatePaymentStatus(@RequestParam("id") String id, @RequestParam("p_status") String status) {
         attendeeService.updatePaymentStatus(id, status);
-        return new ResponseEntity<>(attendeeService.getAttendeeById(id), HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @DeleteMapping("/deleteattendee/{id}")
-    public void deleteAttendee(@PathVariable String id){
-        attendeeService.deleteAttendee(id);
+    @GetMapping("/payment/{AttendeeId}")
+    public ResponseEntity<?> getAttendeeDetailsForPayments(@PathVariable String AttendeeId) {
+        return new ResponseEntity<>(attendeeService.getPaymentDetailsAttendee(AttendeeId), HttpStatus.OK);
     }
 }

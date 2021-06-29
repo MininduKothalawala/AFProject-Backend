@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 @RestController
 @RequestMapping("/api/researcher")
@@ -40,35 +41,35 @@ public class ResearcherController {
         return researcherService.getResearcherById(id);
     }
 
-    @GetMapping("/filter/r_pay/{status}")
+    @GetMapping("/filter/payment/{status}")
     public ResponseEntity<List<Researcher>> filterResearcherByPayment(@PathVariable String status) {
         return new ResponseEntity<>(researcherService.PayStatusOfResearcher(status), HttpStatus.OK);
     }
 
-    @GetMapping("/filterr/r_approval/{status}")
+    @GetMapping("/filter/submission/{status}")
     public ResponseEntity<List<Researcher>> filterResearcherBySubmissionStatus(@PathVariable String status) {
-        return new ResponseEntity<>(researcherService.PaperApprovalStatus(status), HttpStatus.OK);
+        return new ResponseEntity<>(researcherService.PaperSubmissionStatus(status), HttpStatus.OK);
     }
 
-    @GetMapping("/filter/r_conference/{id}")
-    public ResponseEntity<List<Researcher>> filterResearcherByConferenceId(@PathVariable String id) {
-        return new ResponseEntity<>(researcherService.getResearcherByConferenceId(id), HttpStatus.OK);
+    @GetMapping("/search/conference/{search}")
+    public ResponseEntity<List<Researcher>> filterResearcherByConferenceId(@PathVariable String search) {
+        return new ResponseEntity<>(researcherService.getResearcherByConferenceId(search.toUpperCase(Locale.ROOT)), HttpStatus.OK);
     }
 
-    @PutMapping("/update/research/payment")
+    @PutMapping("/update/payment/status")
     public ResponseEntity<?> updatePaymentStatus(@RequestParam("id") String id, @RequestParam("p_status") String status) {
         researcherService.updatePaymentStatus(id, status);
-        return new ResponseEntity<>(researcherService.getResearcherById(id), HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @PutMapping("/update/research/approval")
+    @PutMapping("/update/submission/status")
     public ResponseEntity<?> updateSubmissionStatus(@RequestParam("id") String id, @RequestParam("s_status") String status) {
         researcherService.updateSubmissionStatus(id, status);
-        return new ResponseEntity<>(researcherService.getResearcherById(id), HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @DeleteMapping("/deleteresearcher/{id}")
-    public void deleteResearcher(@PathVariable String id){
-        researcherService.deleteResearcher(id);
+    @GetMapping("/payment/{ResearcherId}")
+    public ResponseEntity<?> getResearcherDetailsForPayments(@PathVariable String ResearcherId) {
+        return new ResponseEntity<>(researcherService.getPaymentDetailsAttendee(ResearcherId), HttpStatus.OK);
     }
 }

@@ -16,7 +16,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 @Service
 public class TemplateService {
@@ -34,26 +36,36 @@ public class TemplateService {
         this.mongoTemplate = mongoTemplate;
     }
 
-    //add template
-    public String addTemplate(String type, String username, MultipartFile file) throws IOException {
+    public List<String> addTemplate(String type, String addedBy, MultipartFile tempImg, MultipartFile tempFile) throws IOException {
+
+        //store preview image to DB
+        DBObject imgMetaData = new BasicDBObject();
+        imgMetaData.put("addedBy", addedBy);
+        Object imgFileId = gridFsTemplate.store(tempImg.getInputStream(), tempImg.getOriginalFilename(), tempImg.getContentType(), imgMetaData);
+
 
         //define metadata for the file
-        DBObject metaData = new BasicDBObject();
-        metaData.put("addedBy", username);
-        metaData.put("templateType", type);
+        DBObject tempMetaData = new BasicDBObject();
+        tempMetaData.put("addedBy", addedBy);
+        tempMetaData.put("templateType", type);
+        tempMetaData.put("imgFileID", imgFileId.toString());
+        tempMetaData.put("imgFileName", tempImg.getOriginalFilename());
 
         //store file in DB
-        Object fileId = gridFsTemplate.store(file.getInputStream(), file.getOriginalFilename(), file.getContentType(), metaData);
+        Object tempFileId = gridFsTemplate.store(tempFile.getInputStream(), tempFile.getOriginalFilename(), tempFile.getContentType(), tempMetaData);
 
-        return fileId.toString();
+        List<String> templateIDList = new ArrayList<>();
+        templateIDList.add(0, imgFileId.toString());
+        templateIDList.add(1, tempFileId.toString());
+
+        return templateIDList;
     }
 
-
-    //download template
-    public byte[] downloadTemplate(String id) throws IOException {
+    //download template file
+    public byte[] downloadTemplate(String tempFileID) throws IOException {
 
         //find file from DB
-        GridFSFile gridFSFile = gridFsTemplate.findOne(new Query(Criteria.where("_id").is(id)));
+        GridFSFile gridFSFile = gridFsTemplate.findOne(new Query(Criteria.where("_id").is(tempFileID)));
 
         //setting data to byte array
         byte[] file = new byte[0];
@@ -65,7 +77,7 @@ public class TemplateService {
         return file;
     }
 
-    //sending filename and content type through hashmap -part of DOWNLOAD
+    //sending filename and content type through hashmap <- part of DOWNLOAD process
     public HashMap<String, String> getDetailsOfFile(String id) {
         //find file from DB
         GridFSFile gridFSFile = gridFsTemplate.findOne(new Query(Criteria.where("_id").is(id)));
@@ -97,7 +109,7 @@ public class TemplateService {
         update.set("tempDesc", desc);
 
         //if content edited by other user, update username
-        if (user !=null &&  !user.getUsername().equals(username)) {
+        if (user !=null &&  !user.getAddedBy().equals(username)) {
             update.set("addedBy", username + "(edited)");
         }
 
@@ -107,47 +119,47 @@ public class TemplateService {
     }
 
     //update all
-    public String updateWithFile(String id, String desc, String type, String username, MultipartFile file) throws IOException {
-        //find and delete existing file
-        String fileId = deleteTemplate(id);
-        String newID = null;
-        String newUser = null;
-
-
-        if (fileId != null) {
-            //if file is deleted then insert new file
-            Query query = new Query();
-            query.addCriteria(Criteria.where("id").is(id));
-
-            //get the added by username
-            Template user = mongoTemplate.findOne(query, Template.class);
-
-            //if content edited by other user, update username
-            if (user != null &&  !user.getUsername().equals(username)) {
-                newUser = user.getUsername() + "(edited)";
-            } else {
-                newUser = username;
-            }
-
-            newID = addTemplate(type, newUser, file);
-
-            if (newID != null) {
-                //find query and update db
-
-                Update update = new Update();
-                update.set("tempDesc", desc);
-                update.set("tempType", type);
-                update.set("addedBy", newUser);
-                update.set("tempFileId", newID);
-                update.set("filename", file.getOriginalFilename());
-
-                mongoTemplate.updateFirst(query, update, Template.class);
-            }
-
-        }
-
-        return id;
-    }
+//    public String updateWithFile(String id, String desc, String type, String username, MultipartFile file) throws IOException {
+//        //find and delete existing file
+//        String fileId = deleteTemplate(id);
+//        String newID = null;
+//        String newUser = null;
+//
+//
+//        if (fileId != null) {
+//            //if file is deleted then insert new file
+//            Query query = new Query();
+//            query.addCriteria(Criteria.where("id").is(id));
+//
+//            //get the added by username
+//            Template user = mongoTemplate.findOne(query, Template.class);
+//
+//            //if content edited by other user, update username
+//            if (user != null &&  !user.getAddedBy().equals(username)) {
+//                newUser = user.getAddedBy() + "(edited)";
+//            } else {
+//                newUser = username;
+//            }
+//
+//            newID = addTemplate(type, newUser, file);
+//
+//            if (newID != null) {
+//                //find query and update db
+//
+//                Update update = new Update();
+//                update.set("tempDesc", desc);
+//                update.set("tempType", type);
+//                update.set("addedBy", newUser);
+//                update.set("tempFileId", newID);
+//                update.set("filename", file.getOriginalFilename());
+//
+//                mongoTemplate.updateFirst(query, update, Template.class);
+//            }
+//
+//        }
+//
+//        return id;
+//    }
 
     //delete template
     public String deleteTemplate(String id) {
