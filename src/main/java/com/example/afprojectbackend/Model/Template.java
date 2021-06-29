@@ -2,41 +2,41 @@ package com.example.afprojectbackend.Model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document("Template")
 public class Template {
     @Id
     private String id;
-    @Field("tempDesc")
     private String tempDesc;
-    @Field("tempType")
     private String tempType;
-    @Field("addedBy")
-    private String username;
-    @Field("tempFileId")
+    private String addedBy;
+    private String imgFileId;
+    private String imgFileName;
     private String tempFileId;
-    @Field("filename")
-    private String filename;
+    private String tempFileName;
 
     public Template() {
     }
 
-    public Template(String id, String tempDesc, String tempType, String username, String tempFileId, String filename) {
+    public Template(String id, String tempDesc, String tempType, String addedBy, String imgFileId, String imgFileName, String tempFileId, String tempFileName) {
         this.id = id;
         this.tempDesc = tempDesc;
         this.tempType = tempType;
-        this.username = username;
+        this.addedBy = addedBy;
+        this.imgFileId = imgFileId;
+        this.imgFileName = imgFileName;
         this.tempFileId = tempFileId;
-        this.filename = filename;
+        this.tempFileName = tempFileName;
     }
 
-    public Template(String tempDesc, String tempType, String username, String tempFileId, String filename) {
+    public Template(String tempDesc, String tempType, String addedBy, String imgFileId, String imgFileName, String tempFileId, String tempFileName) {
         this.tempDesc = tempDesc;
         this.tempType = tempType;
-        this.username = username;
+        this.addedBy = addedBy;
+        this.imgFileId = imgFileId;
+        this.imgFileName = imgFileName;
         this.tempFileId = tempFileId;
-        this.filename = filename;
+        this.tempFileName = tempFileName;
     }
 
     public String getId() {
@@ -63,12 +63,28 @@ public class Template {
         this.tempType = tempType;
     }
 
-    public String getUsername() {
-        return username;
+    public String getAddedBy() {
+        return addedBy;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setAddedBy(String addedBy) {
+        this.addedBy = addedBy;
+    }
+
+    public String getImgFileId() {
+        return imgFileId;
+    }
+
+    public void setImgFileId(String imgFileId) {
+        this.imgFileId = imgFileId;
+    }
+
+    public String getImgFileName() {
+        return imgFileName;
+    }
+
+    public void setImgFileName(String imgFileName) {
+        this.imgFileName = imgFileName;
     }
 
     public String getTempFileId() {
@@ -79,11 +95,12 @@ public class Template {
         this.tempFileId = tempFileId;
     }
 
-    public String getFilename() {
-        return filename;
+    public String getTempFileName() {
+        return tempFileName;
     }
 
-    public void setFilename(String filename) {
-        this.filename = filename;
+    public void setTempFileName(String tempFileName) {
+        this.tempFileName = tempFileName;
     }
+
 }

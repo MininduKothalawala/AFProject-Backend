@@ -14,6 +14,5 @@ public interface ConferenceRepository extends MongoRepository<Conference, String
 
     List<Conference> findByStatus (String status);
 
-    // @Query("{ 'status' : { $regex: ?0 } }")
-    // List<Conference> findUsersByRegexpName(String regexp);
+    Conference findConferenceById(String id);
 }

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/conference")
 public class ConferenceController {
 
@@ -28,7 +28,7 @@ public class ConferenceController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PutMapping("/updateConference/{id}")
+    @PutMapping("/updateConference")
     public ResponseEntity<List<Conference>> updateConference(@RequestBody Conference conference) {
 
         conferenceService.updateConference(conference);
@@ -56,20 +56,17 @@ public class ConferenceController {
     }
     @GetMapping("editedConference/{status}")
     public ResponseEntity<List<Conference>> getEditedConference(@PathVariable String status){
-        return ResponseEntity.ok(conferenceService.getConferenceByStatus("Edited"));
-        //return ResponseEntity.ok(conferenceService.getConferenceByStatus(status));
+        return ResponseEntity.ok(conferenceService.getConferenceByStatus("Updated"));
     }
 
     @GetMapping("expiredConference/{status}")
     public ResponseEntity<List<Conference>> getExpiredConference(@PathVariable String status){
         return ResponseEntity.ok(conferenceService.getConferenceByStatus("Expired"));
-        //return ResponseEntity.ok(conferenceService.getConferenceByStatus(status));
     }
 
     @GetMapping("canceledConference/{status}")
     public ResponseEntity<List<Conference>> getCanceledConference(@PathVariable String status){
         return ResponseEntity.ok(conferenceService.getConferenceByStatus("Canceled"));
-        //return ResponseEntity.ok(conferenceService.getConferenceByStatus(status));
 
     }
 
@@ -79,14 +76,20 @@ public class ConferenceController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @PutMapping("/approveConference/{id}")
-    public ResponseEntity<List<Conference>> approveConference(@RequestBody Conference conference) {
-        conferenceService.AproveConference(conference);
-        return ResponseEntity.ok(conferenceService.getAllConference());
-    }
-
     @GetMapping("/conferencebyid/{id}")
     public Object getConferenceById(@PathVariable String id) {
         return ResponseEntity.ok(conferenceService.getConferenceById(id));
+    }
+
+//    @PutMapping("/approveConference/{id}")
+//    public ResponseEntity<List<Conference>> approveConference(@RequestBody Conference conference) {
+//        conferenceService.ApproveConference(conference);
+//        return ResponseEntity.ok(conferenceService.getAllConference());
+//    }
+
+    @PutMapping("/updateStatus/{id}/{status}")
+    public ResponseEntity<List<Conference>> updateConferenceStatus(@PathVariable String id, @PathVariable String status) {
+        conferenceService.changeStatus(id, status);
+        return ResponseEntity.ok(conferenceService.getAllConference());
     }
 }

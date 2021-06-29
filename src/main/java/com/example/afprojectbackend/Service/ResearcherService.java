@@ -1,6 +1,8 @@
 package com.example.afprojectbackend.Service;
 
+import com.example.afprojectbackend.Model.Conference;
 import com.example.afprojectbackend.Model.Researcher;
+import com.example.afprojectbackend.Repository.ConferenceRepository;
 import com.example.afprojectbackend.Repository.ResearcherRepository;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
@@ -9,12 +11,12 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
-import org.springframework.data.mongodb.gridfs.GridFsOperations;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -26,16 +28,16 @@ public class ResearcherService {
 
     private final GridFsTemplate gridFsTemplate;
 
-    private final GridFsOperations operations;
+    private final ConferenceRepository conferenceRepository;
 
 
     @Autowired
     public ResearcherService(ResearcherRepository researcherRepository, MongoTemplate mongoTemplate,
-                             GridFsTemplate gridFsTemplate, GridFsOperations operations) {
+                             GridFsTemplate gridFsTemplate, ConferenceRepository conferenceRepository) {
         this.researcherRepository = researcherRepository;
         this.mongoTemplate = mongoTemplate;
         this.gridFsTemplate = gridFsTemplate;
-        this.operations = operations;
+        this.conferenceRepository = conferenceRepository;
     }
 
     //insert
@@ -83,7 +85,7 @@ public class ResearcherService {
     }
 
     //filter by paper approval status
-    public List<Researcher> PaperApprovalStatus(String status) {
+    public List<Researcher> PaperSubmissionStatus(String status) {
         return mongoTemplate.find(Query.query(Criteria.where("r_submission_status").is(status)), Researcher.class);
     }
 
@@ -114,9 +116,20 @@ public class ResearcherService {
         mongoTemplate.updateFirst(query, update, Researcher.class);
     }
 
-    //delete
-    public void deleteResearcher(String id) {
-        researcherRepository.deleteById(id);
-    }
+    public HashMap<String,String> getPaymentDetailsAttendee(String ResearcherId) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("_id").is(ResearcherId));
 
+        Researcher researcher = mongoTemplate.findOne(query, Researcher.class);
+        Conference conference = conferenceRepository.findConferenceById(researcher.getR_conferenceId());
+
+        HashMap<String, String> paymentDetails = new HashMap<>();
+        paymentDetails.put("attendeeId", researcher.getR_id());
+        paymentDetails.put("attendeeName", researcher.getR_name());
+        paymentDetails.put("conferenceId", conference.getId());
+        paymentDetails.put("conferenceName", conference.getConferenceName());
+        paymentDetails.put("amount", conference.getPayment());
+
+        return paymentDetails;
+    }
 }
