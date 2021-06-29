@@ -52,4 +52,9 @@ public class AttendeeController {
         attendeeService.updatePaymentStatus(id, status);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+
+    @GetMapping("/payment/{AttendeeId}")
+    public ResponseEntity<?> getAttendeeDetailsForPayments(@PathVariable String AttendeeId) {
+        return new ResponseEntity<>(attendeeService.getPaymentDetailsAttendee(AttendeeId), HttpStatus.OK);
+    }
 }

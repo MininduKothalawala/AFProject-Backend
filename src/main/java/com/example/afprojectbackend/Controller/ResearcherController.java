@@ -67,4 +67,9 @@ public class ResearcherController {
         researcherService.updateSubmissionStatus(id, status);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+
+    @GetMapping("/payment/{ResearcherId}")
+    public ResponseEntity<?> getResearcherDetailsForPayments(@PathVariable String ResearcherId) {
+        return new ResponseEntity<>(researcherService.getPaymentDetailsAttendee(ResearcherId), HttpStatus.OK);
+    }
 }

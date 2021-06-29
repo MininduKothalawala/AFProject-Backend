@@ -1,6 +1,8 @@
 package com.example.afprojectbackend.Service;
 
+import com.example.afprojectbackend.Model.Conference;
 import com.example.afprojectbackend.Model.Researcher;
+import com.example.afprojectbackend.Repository.ConferenceRepository;
 import com.example.afprojectbackend.Repository.ResearcherRepository;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -25,13 +28,16 @@ public class ResearcherService {
 
     private final GridFsTemplate gridFsTemplate;
 
+    private final ConferenceRepository conferenceRepository;
+
 
     @Autowired
     public ResearcherService(ResearcherRepository researcherRepository, MongoTemplate mongoTemplate,
-                             GridFsTemplate gridFsTemplate) {
+                             GridFsTemplate gridFsTemplate, ConferenceRepository conferenceRepository) {
         this.researcherRepository = researcherRepository;
         this.mongoTemplate = mongoTemplate;
         this.gridFsTemplate = gridFsTemplate;
+        this.conferenceRepository = conferenceRepository;
     }
 
     //insert
@@ -110,4 +116,20 @@ public class ResearcherService {
         mongoTemplate.updateFirst(query, update, Researcher.class);
     }
 
+    public HashMap<String,String> getPaymentDetailsAttendee(String ResearcherId) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("_id").is(ResearcherId));
+
+        Researcher researcher = mongoTemplate.findOne(query, Researcher.class);
+        Conference conference = conferenceRepository.findConferenceById(researcher.getR_conferenceId());
+
+        HashMap<String, String> paymentDetails = new HashMap<>();
+        paymentDetails.put("attendeeId", researcher.getR_id());
+        paymentDetails.put("attendeeName", researcher.getR_name());
+        paymentDetails.put("conferenceId", conference.getId());
+        paymentDetails.put("conferenceName", conference.getConferenceName());
+        paymentDetails.put("amount", conference.getPayment());
+
+        return paymentDetails;
+    }
 }
