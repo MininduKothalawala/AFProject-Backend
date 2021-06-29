@@ -31,8 +31,6 @@ public class AdminUserTestClass {
         AdminUser adminUser = new AdminUser("Minindu", "123", "M.Kothalawala","0770817059","minindu@gmail.com","Admin");
         adminUserService.addAdminUser(adminUser);
         Assertions.assertTrue(true,"Added");
-
-
     }
 
     @Test
@@ -47,7 +45,6 @@ public class AdminUserTestClass {
         list.add(adminUser2);
 
         Mockito.when(adminUserService.getAllAdminUsers()).thenReturn(list);
-
     }
 
     @Test

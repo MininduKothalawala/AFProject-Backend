@@ -42,10 +42,7 @@ public class TemplateTestClass {
     @Test
     public void testGetDetailsOfFile(){
 
-
-
         Template template1 = new Template("Project Proposal","Proposal","Minindu","9782","img.png","1657","hello.ppt");
-
 
         templateService.getDetailsOfFile(template1.getId());
         Assertions.assertTrue(true,"Retrieved Template by ID successfully");
@@ -61,15 +58,6 @@ public class TemplateTestClass {
         Assertions.assertTrue(true,"Description Updated Successfully");
     }
 
-//    @Test
-//    public void testUpdateAll() throws IOException{
-//
-//        Template template = new Template("Template test1", "Proposal", "Minindu", "5748","img.png","1890","hello.txt");
-//
-//        MockMultipartFile file = new MockMultipartFile("file","hello.pptx", MediaType.TEXT_PLAIN_VALUE,"Hello,Wolrd!".getBytes(StandardCharsets.UTF_8));
-//        templateService.updateWithFile(template.getId(), "Proposal Test1","Template","Minindu",file);
-//        Assertions.assertTrue(true,"Template Updated Successfully");
-//    }
 
     @Test
     public void testDelete(){

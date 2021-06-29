@@ -36,7 +36,6 @@ public class ResearcherTestClass {
 
         researcherService.addReasearcher("Kalpana","kalpana@gmail.com","0770817059","C0233",file);
         Assertions.assertTrue(true,"Added");
-
     }
 
     @Test
@@ -51,7 +50,6 @@ public class ResearcherTestClass {
         list.add(researcher2);
 
         Mockito.when(researcherService.getAllReasearchers()).thenReturn(list);
-
     }
 
     @Test

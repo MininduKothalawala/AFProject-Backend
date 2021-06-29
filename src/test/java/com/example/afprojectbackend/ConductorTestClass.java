@@ -35,7 +35,6 @@ public class ConductorTestClass {
 
         conductorService.addConductor("Kalpana","kalpana@gmail.com","0770817059","C0233",file);
         Assertions.assertTrue(true,"Added");
-
     }
 
     @Test
@@ -50,7 +49,6 @@ public class ConductorTestClass {
         list.add(conductor2);
 
         Mockito.when(conductorService.getAllConductors()).thenReturn(list);
-
     }
 
     @Test
