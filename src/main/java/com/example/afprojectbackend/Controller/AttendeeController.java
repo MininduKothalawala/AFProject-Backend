@@ -53,8 +53,8 @@ public class AttendeeController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @GetMapping("/payment/{AttendeeId}")
-    public ResponseEntity<?> getAttendeeDetailsForPayments(@PathVariable String AttendeeId) {
-        return new ResponseEntity<>(attendeeService.getPaymentDetailsAttendee(AttendeeId), HttpStatus.OK);
+    @GetMapping("/payment/attendee/{phone}")
+    public ResponseEntity<?> getAttendeeDetailsForPayments(@PathVariable String phone) {
+        return new ResponseEntity<>(attendeeService.getPaymentDetailsAttendee(phone), HttpStatus.OK);
     }
 }

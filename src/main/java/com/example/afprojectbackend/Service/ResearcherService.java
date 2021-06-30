@@ -116,7 +116,7 @@ public class ResearcherService {
         mongoTemplate.updateFirst(query, update, Researcher.class);
     }
 
-    public HashMap<String,String> getPaymentDetailsAttendee(String ResearcherId) {
+    public HashMap<String,String> getPaymentDetailsResearcher(String ResearcherId) {
         Query query = new Query();
         query.addCriteria(Criteria.where("_id").is(ResearcherId));
 
@@ -124,8 +124,9 @@ public class ResearcherService {
         Conference conference = conferenceRepository.findConferenceById(researcher.getR_conferenceId());
 
         HashMap<String, String> paymentDetails = new HashMap<>();
-        paymentDetails.put("attendeeId", researcher.getR_id());
-        paymentDetails.put("attendeeName", researcher.getR_name());
+        paymentDetails.put("researcherId", researcher.getR_id());
+        paymentDetails.put("researcherName", researcher.getR_name());
+        paymentDetails.put("researcherEmail", researcher.getR_email());
         paymentDetails.put("conferenceId", conference.getId());
         paymentDetails.put("conferenceName", conference.getConferenceName());
         paymentDetails.put("amount", conference.getPayment());

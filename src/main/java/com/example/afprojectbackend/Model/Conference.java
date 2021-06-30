@@ -12,6 +12,7 @@ public class Conference {
     private String description;
     private String startingDate;
     private String endingDate;
+    private String addedBy;
     private String venue;
     private String status;
     private String payment;
@@ -19,12 +20,13 @@ public class Conference {
     public Conference() {
     }
 
-    public Conference(String id, String conferenceName, String description, String startingDate, String endingDate, String venue, String status, String payment) {
+    public Conference(String id, String conferenceName, String description, String startingDate, String endingDate, String addedBy, String venue, String status, String payment) {
         this.id = id;
         this.conferenceName = conferenceName;
         this.description = description;
         this.startingDate = startingDate;
         this.endingDate = endingDate;
+        this.addedBy = addedBy;
         this.venue = venue;
         this.status = status;
         this.payment = payment;
@@ -94,4 +96,11 @@ public class Conference {
         this.payment = payment;
     }
 
+    public String getAddedBy() {
+        return addedBy;
+    }
+
+    public void setAddedBy(String addedBy) {
+        this.addedBy = addedBy;
+    }
 }

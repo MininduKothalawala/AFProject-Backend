@@ -1,15 +1,14 @@
 package com.example.afprojectbackend.Service;
 
 import com.example.afprojectbackend.Model.Template;
+import com.example.afprojectbackend.Repository.TemplateRepository;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.client.gridfs.model.GridFSFile;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.data.mongodb.gridfs.GridFsOperations;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.stereotype.Service;
@@ -27,13 +26,13 @@ public class TemplateService {
 
     private final GridFsOperations operations;
 
-    private final MongoTemplate mongoTemplate;
+    private final TemplateRepository templateRepository;
 
     @Autowired
-    public TemplateService(GridFsTemplate gridFsTemplate, GridFsOperations operations, MongoTemplate mongoTemplate) {
+    public TemplateService(GridFsTemplate gridFsTemplate, GridFsOperations operations, TemplateRepository templateRepository) {
         this.gridFsTemplate = gridFsTemplate;
         this.operations = operations;
-        this.mongoTemplate = mongoTemplate;
+        this.templateRepository = templateRepository;
     }
 
     public List<String> addTemplate(String type, String addedBy, MultipartFile tempImg, MultipartFile tempFile) throws IOException {
@@ -93,73 +92,43 @@ public class TemplateService {
     }
 
     //update description only
-    public String updateDescription(String id, String desc, String username) {
+    public String updateDescription(String id, String desc, String addedBy) {
         //find query
-        Query query = new Query();
-        query.addCriteria(Criteria.where("id").is(id)).fields().include("addedBy");
+        Template template = templateRepository.findTemplateById(id);
+        template.setTempDesc(desc);
+        template.setAddedBy(addedBy);
 
-        /*
-         * get the added by username,
-         * to check which user is editing
-         */
-        Template user = mongoTemplate.findOne(query, Template.class);
-
-        //set update field
-        Update update = new Update();
-        update.set("tempDesc", desc);
-
-        //if content edited by other user, update username
-        if (user !=null &&  !user.getAddedBy().equals(username)) {
-            update.set("addedBy", username + "(edited)");
-        }
-
-        mongoTemplate.updateFirst(query, update, Template.class);
+        templateRepository.save(template);
 
         return id;
     }
 
     //update all
-//    public String updateWithFile(String id, String desc, String type, String username, MultipartFile file) throws IOException {
-//        //find and delete existing file
-//        String fileId = deleteTemplate(id);
-//        String newID = null;
-//        String newUser = null;
-//
-//
-//        if (fileId != null) {
+    public String updateWithFile(String id, String desc, String type, String addedBy, MultipartFile tempImg, MultipartFile tempFile) throws IOException {
+        //find and delete existing file from gridFs
+        Template template = templateRepository.findTemplateById(id);
+        String fileId = deleteTemplate(template.getTempFileId());
+        String imgFileId = deleteTemplate(template.getImgFileId());
+
+//-----------------------------------------------------------------------------------------------------------------------------------------
+
+        if (fileId != null && imgFileId != null) {
 //            //if file is deleted then insert new file
-//            Query query = new Query();
-//            query.addCriteria(Criteria.where("id").is(id));
-//
-//            //get the added by username
-//            Template user = mongoTemplate.findOne(query, Template.class);
-//
-//            //if content edited by other user, update username
-//            if (user != null &&  !user.getAddedBy().equals(username)) {
-//                newUser = user.getAddedBy() + "(edited)";
-//            } else {
-//                newUser = username;
-//            }
-//
-//            newID = addTemplate(type, newUser, file);
-//
-//            if (newID != null) {
-//                //find query and update db
-//
-//                Update update = new Update();
-//                update.set("tempDesc", desc);
-//                update.set("tempType", type);
-//                update.set("addedBy", newUser);
-//                update.set("tempFileId", newID);
-//                update.set("filename", file.getOriginalFilename());
-//
-//                mongoTemplate.updateFirst(query, update, Template.class);
-//            }
-//
-//        }
-//
-//        return id;
-//    }
+            List<String> idList = addTemplate(type, addedBy, tempImg, tempFile);
+
+            template.setTempDesc(desc);
+            template.setTempType(type);
+            template.setAddedBy(addedBy);
+            template.setImgFileId(idList.get(0));
+            template.setImgFileName(tempImg.getOriginalFilename());
+            template.setTempFileId(idList.get(1));
+            template.setTempFileName(tempFile.getOriginalFilename());
+
+            templateRepository.save(template);
+        }
+
+        return id;
+    }
 
     //delete template
     public String deleteTemplate(String id) {
