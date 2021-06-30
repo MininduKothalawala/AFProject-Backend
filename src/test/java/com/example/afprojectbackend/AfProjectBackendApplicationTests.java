@@ -19,13 +19,8 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
-//@RunWith(SpringRunner.class);
 @SpringBootTest
 class AfProjectBackendApplicationTests {
-
-//    @Test
-//    void contextLoads() {
-//    }
 
     @Autowired
     private AdminUserService service;
@@ -33,14 +28,12 @@ class AfProjectBackendApplicationTests {
     @MockBean
     private AdminUserRepository repository;
 
-
-   @Test
+    @Test
     public void getUserTest(){
         when(repository.findAll()).thenReturn(Stream.of(new AdminUser("testadmin","testpwd","testname","0710148281","test@gmail.com","admin")).collect(Collectors.toList()));
 
         assertEquals(1,service.getAllAdminUsers().size());
     }
-
 
     @Test
     public void getUserByname(){
