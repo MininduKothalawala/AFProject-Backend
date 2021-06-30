@@ -11,4 +11,6 @@ public interface TemplateRepository extends MongoRepository<Template, String> {
 
     @Query("{'username' : { $regex : ?0 , $options: 'i' }}")
     List<Template> findByUsernameContains(String username);
+
+    Template findTemplateById(String id);
 }
