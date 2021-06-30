@@ -88,30 +88,32 @@ public class TemplateController {
 
     //update description only
     @PutMapping("/updateDesc")
-    public ResponseEntity<?> updateDesc(@RequestParam("id") String id, @RequestParam("desc") String desc, @RequestParam("username") String username) {
+    public ResponseEntity<?> updateDesc(@RequestParam("id") String id, @RequestParam("desc") String desc, @RequestParam("addedBy") String username) {
         String res = templateService.updateDescription(id, desc, username);
         return ResponseEntity.ok(res);
     }
 
     //update all
-//    @PutMapping("/update")
-//    public ResponseEntity<?> updateTemplate(@RequestParam("id") String id, @RequestParam("desc") String desc,
-//                                        @RequestParam("type") String type,@RequestParam("username") String username,
-//                                        @RequestParam("file") MultipartFile file) throws IOException {
-//
-//        String res = templateService.updateWithFile(id, desc, type, username, file);
-//        return ResponseEntity.ok(res);
-//    }
+    @PutMapping("/update")
+    public ResponseEntity<?> updateTemplate(@RequestParam("id") String id, @RequestParam("desc") String desc,
+                                            @RequestParam("type") String type, @RequestParam("addedBy") String addedBy,
+                                            @RequestParam("tempImg") MultipartFile tempImg,
+                                            @RequestParam("tempFile") MultipartFile tempFile) throws IOException {
+
+        String res = templateService.updateWithFile(id, desc, type, addedBy, tempImg, tempFile);
+        return ResponseEntity.ok(res);
+    }
 
     //delete template
-    @DeleteMapping("/{id}/{fileId}")
-    public ResponseEntity<?> deleteTemplate(@PathVariable String id, @PathVariable String fileId) {
+    @DeleteMapping("/{id}/{imgId}/{fileId}")
+    public ResponseEntity<?> deleteTemplate(@PathVariable String id, @PathVariable String imgId, @PathVariable String fileId) {
         //delete from GridFs
-        String res = templateService.deleteTemplate(fileId);
+        templateService.deleteTemplate(fileId);
+        templateService.deleteTemplate(imgId);
 
         //delete from Mongo Collection
         templateRepository.deleteById(id);
-        return ResponseEntity.ok("File ID: " + res);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 }
