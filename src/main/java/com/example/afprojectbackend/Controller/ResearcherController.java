@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Locale;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://af-icaf-frontend.azurewebsites.net")
 @RequestMapping("/api/researcher")
 public class ResearcherController {
 
