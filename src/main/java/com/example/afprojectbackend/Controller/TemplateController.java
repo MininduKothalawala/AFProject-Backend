@@ -18,8 +18,9 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "https://af-icaf-frontend.azurewebsites.net")
 @RequestMapping("/templates")
-@CrossOrigin(origins = "http://localhost:3000")
+
 public class TemplateController {
 
     private final TemplateRepository templateRepository;
