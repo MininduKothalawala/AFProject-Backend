@@ -13,8 +13,8 @@ import java.util.List;
 import java.util.Locale;
 
 @RestController
-@RequestMapping("/api/researcher")
 @CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/api/researcher")
 public class ResearcherController {
 
     private final ResearcherService researcherService;
