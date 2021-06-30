@@ -29,7 +29,7 @@ public class ConferenceTestClass {
     @Test
     public void testCreate() throws Exception{
 
-        Conference conference = new Conference("C0233", "IT","Test", "2020-10-09","2020-10-10","SLIIT","Pending","1000");
+        Conference conference = new Conference("C0233", "IT","Test", "2020-10-09","2020-10-10","Minindu","SLIIT","Pending","1000");
         conferenceService.addConference(conference);
         Assertions.assertTrue(true,"Added");
 
@@ -38,7 +38,7 @@ public class ConferenceTestClass {
     @Test
     public void testUpdate(){
 
-        Conference conference = new Conference("C0233", "Software","Test", "2020-10-09","2020-10-10","SLIIT","Pending","1000");
+        Conference conference = new Conference("C0233", "Software","Test", "2020-10-09","2020-10-10","kalpana","SLIIT","Pending","1000");
         conferenceService.updateConference(conference);
         Assertions.assertTrue(true,"Added");
 
@@ -48,7 +48,7 @@ public class ConferenceTestClass {
     @Test
     public void testGetAll(){
 
-        Conference conference = new Conference("C0233", "IT","Test", "2020-10-09","2020-10-10","SLIIT","Pending","1000");
+        Conference conference = new Conference("C0233", "IT","Test", "2020-10-09","2020-10-10","hansi","SLIIT","Pending","1000");
 
         List<Conference> conferenceList = Arrays.asList(conference);
         Mockito.when(conferenceService.getAllConference()).thenReturn(conferenceList);
@@ -57,7 +57,7 @@ public class ConferenceTestClass {
     @Test
     public void testDelete(){
 
-        Conference conference = new Conference("C0233", "IT","Test", "2020-10-09","2020-10-10","SLIIT","Pending","1000");
+        Conference conference = new Conference("C0233", "IT","Test", "2020-10-09","2020-10-10","isuri","SLIIT","Pending","1000");
         conferenceService.deleteConference(conference.getId());
         Assertions.assertTrue(true,"Deleted");
 
@@ -68,8 +68,8 @@ public class ConferenceTestClass {
 
         List<Conference> list = new ArrayList<Conference>();
 
-        Conference conference1 = new Conference("C0233", "IT","Test", "2020-10-09","2020-10-10","SLIIT","Pending","1000");
-        Conference conference2 = new Conference("C0283", "IT","Test", "2020-10-09","2020-10-10","SLIIT","Approved","1000");
+        Conference conference1 = new Conference("C0233", "IT","Test", "2020-10-09","2020-10-10","hansi", "SLIIT","Pending","1000");
+        Conference conference2 = new Conference("C0283", "IT","Test", "2020-10-09","2020-10-10","isuri","SLIIT","Approved","1000");
 
         list.add(conference1);
         list.add(conference2);
@@ -83,9 +83,9 @@ public class ConferenceTestClass {
 
         List<Conference> list = new ArrayList<Conference>();
 
-        Conference conference1 = new Conference("C0233", "IT","Test", "2020-10-09","2020-10-10","SLIIT","Pending","1000");
-        Conference conference2 = new Conference("C0283", "IT","Test", "2020-10-09","2020-10-10","SLIIT","Approved","1000");
-        Conference conference3 = new Conference("C0293", "IT","Test", "2020-10-09","2020-10-10","SLIIT","Pending","1000");
+        Conference conference1 = new Conference("C0233", "IT","Test", "2020-10-09","2020-10-10","Isuri","SLIIT","Pending","1000");
+        Conference conference2 = new Conference("C0283", "IT","Test", "2020-10-09","2020-10-10","Hansi", "SLIIT","Approved","1000");
+        Conference conference3 = new Conference("C0293", "IT","Test", "2020-10-09","2020-10-10","kalpana","SLIIT","Pending","1000");
 
         list.add(conference1);
         list.add(conference2);
