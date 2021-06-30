@@ -61,9 +61,9 @@ public class AttendeeService {
         mongoTemplate.updateFirst(query, update, Attendee.class);
     }
 
-    public HashMap<String,String> getPaymentDetailsAttendee(String AttendeeId) {
+    public HashMap<String,String> getPaymentDetailsAttendee(String phone) {
         Query query = new Query();
-        query.addCriteria(Criteria.where("_id").is(AttendeeId));
+        query.addCriteria(Criteria.where("a_mobileNo").is(phone));
 
         Attendee attendee = mongoTemplate.findOne(query, Attendee.class);
         Conference conference = conferenceRepository.findConferenceById(attendee.getA_conferenceId());
@@ -71,6 +71,7 @@ public class AttendeeService {
         HashMap<String, String> paymentDetails = new HashMap<>();
         paymentDetails.put("attendeeId", attendee.getA_id());
         paymentDetails.put("attendeeName", attendee.getA_name());
+        paymentDetails.put("attendeeEmail", attendee.getA_email());
         paymentDetails.put("conferenceId", conference.getId());
         paymentDetails.put("conferenceName", conference.getConferenceName());
         paymentDetails.put("amount", conference.getPayment());
