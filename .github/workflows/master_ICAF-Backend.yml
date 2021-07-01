@@ -49,5 +49,5 @@ jobs:
       with:
         app-name: 'ICAF-Backend'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_67af4281545247e7beedd00fe7afe679 }}
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_9f1edadb624e4461b98c6518ab3207f3 }}
         package: '*.jar'
